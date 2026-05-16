@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby.exe
+
+ENV["PORT"] ||= "3000"
+
+unless system("gem list --installed --exact --silent foreman")
+  puts "Installing foreman..."
+  system("gem install foreman") || abort("Failed to install foreman")
+end
+
+exec "foreman", "start", "-f", "Procfile.dev", *ARGV
