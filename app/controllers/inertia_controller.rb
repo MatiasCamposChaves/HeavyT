@@ -2,5 +2,9 @@
 
 class InertiaController < ApplicationController
   # Share data with all Inertia responses.
-  # inertia_share user: -> { Current.user&.as_json(only: [:id, :name, :email]) }
+  inertia_share auth: lambda {
+    {
+      user: current_user&.as_json(only: [:id, :full_name, :email, :phone]),
+    }
+  }
 end
