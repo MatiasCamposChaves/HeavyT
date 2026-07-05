@@ -1,7 +1,21 @@
 import { Head, Link, useForm } from "@inertiajs/react"
 
 import Logo from "./Logo"
-import cs from "./auth.module.css"
+import {
+  authPage,
+  authPanel,
+  authShell,
+  error,
+  field,
+  form,
+  input,
+  label,
+  links,
+  logoWrap,
+  selectionButton,
+  textLink,
+  title,
+} from "./classes"
 
 function errorText(value) {
   return Array.isArray(value) ? value.join(", ") : value
@@ -17,8 +31,8 @@ export default function Register() {
     },
   })
 
-  function updateUser(field, value) {
-    setData("user", { ...data.user, [field]: value })
+  function updateUser(fieldName, value) {
+    setData("user", { ...data.user, [fieldName]: value })
   }
 
   function submit(event) {
@@ -27,69 +41,69 @@ export default function Register() {
   }
 
   return (
-    <main className={cs.page}>
+    <main className={authPage}>
       <Head title="Registrar usuario" />
-      <section>
-        <div className={cs.formPanel}>
-          <div className={cs.logoWrap}>
+      <section className={authShell}>
+        <div className={authPanel}>
+          <div className={logoWrap}>
             <Logo compact />
           </div>
-          <h1 className={cs.title}>Registrarse</h1>
+          <h1 className={title}>Registrarse</h1>
 
-          <form className={cs.form} onSubmit={submit}>
-            <label className={cs.field}>
-              <span className={cs.label}>Nombre completo</span>
+          <form className={form} onSubmit={submit}>
+            <label className={field}>
+              <span className={label}>Nombre completo</span>
               <input
-                className={cs.input}
+                className={input}
                 autoComplete="name"
                 value={data.user.full_name}
                 onChange={(event) => updateUser("full_name", event.target.value)}
               />
-              {errors.full_name && <p className={cs.error}>{errorText(errors.full_name)}</p>}
+              {errors.full_name && <p className={error}>{errorText(errors.full_name)}</p>}
             </label>
 
-            <label className={cs.field}>
-              <span className={cs.label}>Correo electronico</span>
+            <label className={field}>
+              <span className={label}>Correo electronico</span>
               <input
-                className={cs.input}
+                className={input}
                 type="email"
                 autoComplete="email"
                 value={data.user.email}
                 onChange={(event) => updateUser("email", event.target.value)}
               />
-              {errors.email && <p className={cs.error}>{errorText(errors.email)}</p>}
+              {errors.email && <p className={error}>{errorText(errors.email)}</p>}
             </label>
 
-            <label className={cs.field}>
-              <span className={cs.label}>Telefono</span>
+            <label className={field}>
+              <span className={label}>Telefono</span>
               <input
-                className={cs.input}
+                className={input}
                 autoComplete="tel"
                 value={data.user.phone}
                 onChange={(event) => updateUser("phone", event.target.value)}
               />
-              {errors.phone && <p className={cs.error}>{errorText(errors.phone)}</p>}
+              {errors.phone && <p className={error}>{errorText(errors.phone)}</p>}
             </label>
 
-            <label className={cs.field}>
-              <span className={cs.label}>Contraseña</span>
+            <label className={field}>
+              <span className={label}>Contrasena</span>
               <input
-                className={cs.input}
+                className={input}
                 type="password"
                 autoComplete="new-password"
                 value={data.user.password}
                 onChange={(event) => updateUser("password", event.target.value)}
               />
-              {errors.password && <p className={cs.error}>{errorText(errors.password)}</p>}
+              {errors.password && <p className={error}>{errorText(errors.password)}</p>}
             </label>
 
-            <button className={`${cs.selectionButton} ${cs.registerSubmit}`} type="submit" disabled={processing}>
+            <button className={`${selectionButton} mt-2.5`} type="submit" disabled={processing}>
               {processing ? "Creando cuenta..." : "Registrarse"}
             </button>
           </form>
 
-          <div className={cs.links}>
-            <Link className={cs.textLink} href="/login">¿Ya tienes cuenta? Iniciar sesión</Link>
+          <div className={links}>
+            <Link className={textLink} href="/login">Ya tienes cuenta? Iniciar sesion</Link>
           </div>
         </div>
       </section>

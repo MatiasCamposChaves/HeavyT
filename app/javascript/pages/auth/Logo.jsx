@@ -1,7 +1,5 @@
-import cs from "./auth.module.css"
-
 export default function Logo({ compact = false }) {
-  const className = compact ? cs.formLogo : cs.logo
+  const className = compact ? "h-[72px] w-[88px]" : "h-[126px] w-[146px]"
 
   return (
     <svg className={className} viewBox="0 0 180 150" role="img" aria-label="Heavy T">

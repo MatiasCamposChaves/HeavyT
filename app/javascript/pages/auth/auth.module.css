@@ -134,6 +134,7 @@
   border-radius: 9px;
   box-sizing: border-box;
   color: #f7f8fb;
+  cursor: pointer;
   display: inline-flex;
   font-size: 14px;
   font-weight: 800;

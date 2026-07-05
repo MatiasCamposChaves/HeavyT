@@ -11,7 +11,7 @@ class SessionsController < InertiaController
       session[:user_id] = user.id
       redirect_to dashboard_path
     else
-      redirect_to login_path, inertia: { errors: { email: ["Correo o contraseña incorrectos"] } }
+      redirect_to login_path, inertia: { errors: { auth: ["Correo o contrasena incorrectos"] } }
     end
   end
 

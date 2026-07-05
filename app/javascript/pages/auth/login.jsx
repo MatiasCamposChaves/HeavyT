@@ -1,7 +1,22 @@
 import { Head, Link, useForm } from "@inertiajs/react"
 
 import Logo from "./Logo"
-import cs from "./auth.module.css"
+import {
+  authPage,
+  authPanel,
+  authShell,
+  error,
+  field,
+  form,
+  formAlert,
+  input,
+  label,
+  links,
+  logoWrap,
+  selectionButton,
+  textLink,
+  title,
+} from "./classes"
 
 function errorText(value) {
   return Array.isArray(value) ? value.join(", ") : value
@@ -20,49 +35,58 @@ export default function Login() {
     post("/login")
   }
 
+  const loginError = errors.auth || errors.email
+
   return (
-    <main className={cs.page}>
+    <main className={authPage}>
       <Head title="Login" />
-      <section>
-        <div className={cs.formPanel}>
-          <div className={cs.logoWrap}>
+      <section className={authShell}>
+        <div className={authPanel}>
+          <div className={logoWrap}>
             <Logo compact />
           </div>
-          <h1 className={cs.title}>Iniciar sesión</h1>
+          <h1 className={title}>Iniciar sesion</h1>
 
-          <form className={cs.form} onSubmit={submit}>
-            <label className={cs.field}>
-              <span className={cs.label}>Correo electronico</span>
+          <form className={form} onSubmit={submit}>
+            <label className={field}>
+              <span className={label}>Correo electronico</span>
               <input
-                className={cs.input}
+                className={input}
                 type="email"
                 autoComplete="email"
+                required
                 value={data.session.email}
                 onChange={(event) => setData("session", { ...data.session, email: event.target.value })}
               />
-              {errors.email && <p className={cs.error}>{errorText(errors.email)}</p>}
             </label>
 
-            <label className={cs.field}>
-              <span className={cs.label}>Contraseña</span>
+            <label className={field}>
+              <span className={label}>Contrasena</span>
               <input
-                className={cs.input}
+                className={input}
                 type="password"
                 autoComplete="current-password"
+                required
                 value={data.session.password}
                 onChange={(event) => setData("session", { ...data.session, password: event.target.value })}
               />
-              {errors.password && <p className={cs.error}>{errorText(errors.password)}</p>}
+              {errors.password && <p className={error}>{errorText(errors.password)}</p>}
             </label>
 
-            <button className={`${cs.selectionButton} ${cs.submit}`} type="submit" disabled={processing}>
-              {processing ? "Ingresando..." : "Iniciar sesión"}
+            {loginError && (
+              <p className={formAlert} role="alert">
+                {errorText(loginError)}
+              </p>
+            )}
+
+            <button className={`${selectionButton} mt-6 sm:mt-[26px]`} type="submit" disabled={processing}>
+              {processing ? "Ingresando..." : "Iniciar sesion"}
             </button>
           </form>
 
-          <div className={cs.links}>
-            <a className={cs.textLink} href="mailto:soporte@heavyt.local">Olvide mi contraseña</a>
-            <Link className={cs.textLink} href="/register">¿No tienes cuenta? Registrate</Link>
+          <div className={links}>
+            <a className={textLink} href="mailto:soporte@heavyt.local">Olvide mi contrasena</a>
+            <Link className={textLink} href="/register">No tienes cuenta? Registrate</Link>
           </div>
         </div>
       </section>

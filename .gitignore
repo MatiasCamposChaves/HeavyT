@@ -30,6 +30,10 @@
 
 /public/assets
 /public/vite
+/public/vite-dev
+
+# Ignore local installers and binaries.
+*.exe
 
 # Ignore JavaScript dependencies.
 /node_modules
