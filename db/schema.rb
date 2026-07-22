@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_22_030000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,45 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_000000) do
     t.bigint "user_id", null: false
     t.index ["trainer_profile_id"], name: "index_client_profiles_on_trainer_profile_id"
     t.index ["user_id"], name: "index_client_profiles_on_user_id", unique: true
+  end
+
+  create_table "exercises", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.text "notes"
+    t.integer "position", default: 1, null: false
+    t.integer "repetitions", null: false
+    t.integer "rest_seconds"
+    t.bigint "routine_id", null: false
+    t.integer "sets", null: false
+    t.decimal "suggested_weight_lb", precision: 7, scale: 2
+    t.datetime "updated_at", null: false
+    t.index ["routine_id", "position"], name: "index_exercises_on_routine_id_and_position"
+    t.index ["routine_id"], name: "index_exercises_on_routine_id"
+  end
+
+  create_table "routine_assignments", force: :cascade do |t|
+    t.datetime "assigned_at", null: false
+    t.bigint "client_profile_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "routine_id", null: false
+    t.string "status", default: "active", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_profile_id"], name: "index_routine_assignments_on_client_profile_id"
+    t.index ["routine_id", "client_profile_id"], name: "index_assignments_on_routine_and_client", unique: true
+    t.index ["routine_id"], name: "index_routine_assignments_on_routine_id"
+  end
+
+  create_table "routines", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "goal"
+    t.string "name", null: false
+    t.string "status", default: "draft", null: false
+    t.bigint "trainer_profile_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trainer_profile_id", "status"], name: "index_routines_on_trainer_profile_id_and_status"
+    t.index ["trainer_profile_id"], name: "index_routines_on_trainer_profile_id"
   end
 
   create_table "trainer_invites", force: :cascade do |t|
@@ -44,6 +83,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_000000) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.datetime "blocked_at"
     t.datetime "created_at", null: false
     t.string "email", null: false
     t.string "full_name", null: false
@@ -51,12 +91,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_000000) do
     t.string "phone", null: false
     t.string "role", default: "client", null: false
     t.datetime "updated_at", null: false
+    t.index ["blocked_at"], name: "index_users_on_blocked_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role"], name: "index_users_on_role"
   end
 
   add_foreign_key "client_profiles", "trainer_profiles"
   add_foreign_key "client_profiles", "users"
+  add_foreign_key "exercises", "routines"
+  add_foreign_key "routine_assignments", "client_profiles"
+  add_foreign_key "routine_assignments", "routines"
+  add_foreign_key "routines", "trainer_profiles"
   add_foreign_key "trainer_invites", "trainer_profiles"
   add_foreign_key "trainer_profiles", "users"
 end

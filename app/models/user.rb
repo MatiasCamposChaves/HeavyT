@@ -18,6 +18,9 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 8 }, allow_nil: true
   validates :role, inclusion: { in: ROLES }
 
+  scope :active, -> { where(blocked_at: nil) }
+  scope :blocked, -> { where.not(blocked_at: nil) }
+
   def client?
     role == "client"
   end
@@ -28,6 +31,10 @@ class User < ApplicationRecord
 
   def admin?
     role == "admin"
+  end
+
+  def blocked?
+    blocked_at.present?
   end
 
   private

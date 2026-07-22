@@ -26,7 +26,7 @@ export const formAlert =
   "rounded-[9px] border border-[#e5253b] bg-[#e5253b]/10 px-3 py-2 text-center text-xs font-extrabold text-[#ff8391]"
 
 export const selectionButton =
-  "inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-[9px] border border-white bg-transparent px-3 text-center text-sm font-extrabold text-[#f7f8fb] no-underline transition-colors duration-150 hover:border-[#e5253b] hover:bg-[#e5253b] focus-visible:border-[#e5253b] focus-visible:bg-[#e5253b] disabled:cursor-not-allowed disabled:opacity-70 sm:h-[37px]"
+  "inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-[9px] border border-[#e5253b] bg-[#e5253b] px-3 text-center text-sm font-extrabold text-[#f7f8fb] no-underline transition-colors duration-150 hover:border-[#c91f33] hover:bg-[#c91f33] focus-visible:border-[#c91f33] focus-visible:bg-[#c91f33] disabled:cursor-not-allowed disabled:opacity-70 sm:h-[37px]"
 
 export const links = "mt-5 grid gap-5 text-center"
 

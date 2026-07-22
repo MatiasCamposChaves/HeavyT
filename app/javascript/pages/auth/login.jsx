@@ -1,6 +1,9 @@
 import { Head, Link, useForm } from "@inertiajs/react"
+import { useState } from "react"
 
 import Logo from "./Logo"
+import PasswordVisibilityButton from "./PasswordVisibilityButton"
+import FlashToast from "../dashboard/FlashToast"
 import {
   authPage,
   authPanel,
@@ -23,6 +26,7 @@ function errorText(value) {
 }
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false)
   const { data, setData, post, processing, errors } = useForm({
     session: {
       email: "",
@@ -41,7 +45,8 @@ export default function Login() {
     <main className={authPage}>
       <Head title="Login" />
       <section className={authShell}>
-        <div className={authPanel}>
+        <div className={`${authPanel} relative`}>
+          <FlashToast />
           <div className={logoWrap}>
             <Logo compact />
           </div>
@@ -62,14 +67,17 @@ export default function Login() {
 
             <label className={field}>
               <span className={label}>Contrasena</span>
-              <input
-                className={input}
-                type="password"
-                autoComplete="current-password"
-                required
-                value={data.session.password}
-                onChange={(event) => setData("session", { ...data.session, password: event.target.value })}
-              />
+              <div className="relative">
+                <input
+                  className={`${input} pr-12`}
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  required
+                  value={data.session.password}
+                  onChange={(event) => setData("session", { ...data.session, password: event.target.value })}
+                />
+                <PasswordVisibilityButton visible={showPassword} onToggle={() => setShowPassword((visible) => !visible)} />
+              </div>
               {errors.password && <p className={error}>{errorText(errors.password)}</p>}
             </label>
 

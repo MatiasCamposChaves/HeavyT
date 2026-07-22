@@ -8,8 +8,8 @@ module Admin
       render inertia: {
         user: current_user.as_json(only: [:full_name, :email, :phone, :role]),
         stats: {
-          clients: User.where(role: "client").count,
-          trainers: User.where(role: "trainer").count,
+          clients: User.active.where(role: "client").count,
+          trainers: User.active.where(role: "trainer").count,
         },
       }
     end

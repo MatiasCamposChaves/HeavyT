@@ -1,4 +1,4 @@
-import { Head, useForm, usePage } from "@inertiajs/react"
+import { Head, Link, useForm } from "@inertiajs/react"
 
 import DashboardShell, { card, primaryButton } from "../../dashboard/DashboardShell"
 
@@ -7,7 +7,6 @@ function errorText(value) {
 }
 
 export default function ClientDashboard({ trainer, user }) {
-  const { flash } = usePage().props
   const { data, errors, post, processing, setData } = useForm({
     trainer_link: { code: "" },
   })
@@ -22,9 +21,8 @@ export default function ClientDashboard({ trainer, user }) {
       <Head title="Inicio del cliente" />
       <h1 className="mb-5 text-xl font-extrabold uppercase">Bienvenido, {user.full_name.split(" ")[0]}</h1>
 
-      {flash?.notice && <p className="mb-4 rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm font-bold text-emerald-300">{flash.notice}</p>}
-
       {trainer ? (
+        <div className="grid gap-4">
         <section className={card}>
           <p className="mb-1 text-xs font-bold uppercase text-[#e5253b]">Tu entrenador</p>
           <h2 className="mb-4 text-lg font-extrabold">{trainer.full_name}</h2>
@@ -39,6 +37,8 @@ export default function ClientDashboard({ trainer, user }) {
             </div>
           </dl>
         </section>
+        <Link className={`${primaryButton} w-full`} href="/client/routines">Ver mis rutinas</Link>
+        </div>
       ) : (
         <section className={card}>
           <h2 className="mb-2 font-extrabold uppercase">Vincular entrenador</h2>

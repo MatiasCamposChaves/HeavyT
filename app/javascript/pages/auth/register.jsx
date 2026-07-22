@@ -1,6 +1,8 @@
 import { Head, Link, useForm } from "@inertiajs/react"
+import { useState } from "react"
 
 import Logo from "./Logo"
+import PasswordVisibilityButton from "./PasswordVisibilityButton"
 import {
   authPage,
   authPanel,
@@ -22,6 +24,7 @@ function errorText(value) {
 }
 
 export default function Register() {
+  const [showPassword, setShowPassword] = useState(false)
   const { data, setData, post, processing, errors } = useForm({
     user: {
       full_name: "",
@@ -101,13 +104,16 @@ export default function Register() {
 
             <label className={field}>
               <span className={label}>Contrasena</span>
-              <input
-                className={input}
-                type="password"
-                autoComplete="new-password"
-                value={data.user.password}
-                onChange={(event) => updateUser("password", event.target.value)}
-              />
+              <div className="relative">
+                <input
+                  className={`${input} pr-12`}
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="new-password"
+                  value={data.user.password}
+                  onChange={(event) => updateUser("password", event.target.value)}
+                />
+                <PasswordVisibilityButton visible={showPassword} onToggle={() => setShowPassword((visible) => !visible)} />
+              </div>
               {errors.password && <p className={error}>{errorText(errors.password)}</p>}
             </label>
 

@@ -1,4 +1,4 @@
-import { Head, useForm, usePage } from "@inertiajs/react"
+import { Head, Link, useForm } from "@inertiajs/react"
 import { useState } from "react"
 
 import DashboardShell, { card, primaryButton } from "../../dashboard/DashboardShell"
@@ -13,7 +13,6 @@ function expirationText(value) {
 }
 
 export default function TrainerDashboard({ clients, invite, user }) {
-  const { flash } = usePage().props
   const { post, processing } = useForm()
   const [copied, setCopied] = useState(false)
 
@@ -35,9 +34,8 @@ export default function TrainerDashboard({ clients, invite, user }) {
       <h1 className="mb-2 text-xl font-extrabold uppercase">Panel del entrenador</h1>
       <p className="mb-5 text-sm leading-6 text-[#c8cbd2]">Comparte tu código para vincular clientes a tu cuenta.</p>
 
-      {flash?.notice && <p className="mb-4 rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm font-bold text-emerald-300">{flash.notice}</p>}
-
       <div className="grid gap-4">
+        <Link className={`${primaryButton} w-full`} href="/trainer/routines">Administrar rutinas</Link>
         <section className={card}>
           <p className="mb-1 text-xs font-bold uppercase text-[#aeb2ba]">Clientes vinculados</p>
           <strong className="text-3xl">{clients.length}</strong>
@@ -48,7 +46,7 @@ export default function TrainerDashboard({ clients, invite, user }) {
           {invite ? (
             <>
               <button
-                className="mb-2 w-full rounded-lg border border-dashed border-[#e5253b] bg-[#171a20] px-4 py-3 text-center font-mono text-2xl font-black tracking-[0.28em] text-white"
+                className="mb-2 w-full rounded-lg border border-dashed border-[#e5253b] bg-[#171a20] px-4 py-3 text-center font-mono text-2xl font-black tracking-[0.28em] text-white transition-colors hover:border-[#c91f33] hover:bg-[#c91f33]"
                 type="button"
                 onClick={copyCode}
               >

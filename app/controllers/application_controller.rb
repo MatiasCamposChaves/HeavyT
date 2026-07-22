@@ -18,6 +18,11 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
+    if current_user&.blocked?
+      reset_session
+      return redirect_to login_path, alert: "Tu cuenta está bloqueada. Contacta al administrador."
+    end
+
     return if user_signed_in?
 
     redirect_to login_path

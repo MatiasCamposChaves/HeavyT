@@ -3,6 +3,8 @@
 class ClientProfile < ApplicationRecord
   belongs_to :user
   belongs_to :trainer_profile, optional: true
+  has_many :routine_assignments, dependent: :destroy
+  has_many :routines, through: :routine_assignments
 
   validate :user_must_be_client
 
