@@ -9,7 +9,7 @@ class RegistrationsController < InertiaController
     if user.save
       reset_session
       session[:user_id] = user.id
-      redirect_to dashboard_path
+      redirect_to dashboard_path_for(user)
     else
       redirect_to register_path, inertia: { errors: user.errors }
     end
@@ -18,6 +18,8 @@ class RegistrationsController < InertiaController
   private
 
   def user_params
-    params.require(:user).permit(:full_name, :email, :phone, :password)
+    permitted = params.require(:user).permit(:full_name, :email, :phone, :password, :role)
+    permitted[:role] = "client" unless %w[client trainer].include?(permitted[:role])
+    permitted
   end
 end

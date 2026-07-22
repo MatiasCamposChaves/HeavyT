@@ -1,0 +1,180 @@
+{
+  "_Logo-BhJNsvHD.js": {
+    "file": "assets/Logo-BhJNsvHD.js",
+    "name": "Logo",
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_jsx-runtime-v47ECsj2.js"
+    ]
+  },
+  "_classes-CdhUQLSs.js": {
+    "file": "assets/classes-CdhUQLSs.js",
+    "name": "classes"
+  },
+  "_inertia-B-Mw6-Iv.svg": {
+    "file": "assets/inertia-B-Mw6-Iv.svg",
+    "src": "_inertia-B-Mw6-Iv.svg"
+  },
+  "_jsx-runtime-v47ECsj2.js": {
+    "file": "assets/jsx-runtime-v47ECsj2.js",
+    "name": "jsx-runtime",
+    "imports": [
+      "entrypoints/inertia.jsx"
+    ]
+  },
+  "_react-D1O1WqmP.svg": {
+    "file": "assets/react-D1O1WqmP.svg",
+    "src": "_react-D1O1WqmP.svg"
+  },
+  "_vite_ruby-BkLf4vgQ.svg": {
+    "file": "assets/vite_ruby-BkLf4vgQ.svg",
+    "src": "_vite_ruby-BkLf4vgQ.svg"
+  },
+  "assets/rails.svg": {
+    "file": "assets/rails-6kKmFj25.svg",
+    "src": "assets/rails.svg"
+  },
+  "entrypoints/application.css": {
+    "file": "assets/application-BBQ3hcTT.css",
+    "name": "entrypoints\\application.css",
+    "names": [
+      "entrypoints/application.css"
+    ],
+    "src": "entrypoints/application.css",
+    "isEntry": true
+  },
+  "entrypoints/application.js": {
+    "file": "assets/application-DQXq7vvp.js",
+    "name": "entrypoints\\application.js",
+    "src": "entrypoints/application.js",
+    "isEntry": true
+  },
+  "entrypoints/inertia.jsx": {
+    "file": "assets/inertia-Vn2RI-Os.js",
+    "name": "entrypoints\\inertia.jsx",
+    "src": "entrypoints/inertia.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "pages/admin/dashboard/index.jsx",
+      "_Logo-BhJNsvHD.js",
+      "pages/auth/landing.jsx",
+      "pages/auth/login.jsx",
+      "pages/auth/register.jsx",
+      "pages/client/dashboard/index.jsx",
+      "pages/dashboard/DashboardShell.jsx",
+      "pages/dashboard/index.jsx",
+      "pages/inertia_example/index.jsx",
+      "pages/trainer/dashboard/index.jsx"
+    ]
+  },
+  "pages/admin/dashboard/index.jsx": {
+    "file": "assets/dashboard-gDZY-8Jx.js",
+    "name": "dashboard",
+    "src": "pages/admin/dashboard/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "pages/dashboard/DashboardShell.jsx",
+      "_jsx-runtime-v47ECsj2.js"
+    ]
+  },
+  "pages/auth/landing.jsx": {
+    "file": "assets/landing-B-qzDDYb.js",
+    "name": "landing",
+    "src": "pages/auth/landing.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_Logo-BhJNsvHD.js",
+      "_jsx-runtime-v47ECsj2.js"
+    ],
+    "css": [
+      "assets/landing-B2XFMS9V.css"
+    ]
+  },
+  "pages/auth/login.jsx": {
+    "file": "assets/login-Bn5ZYO40.js",
+    "name": "login",
+    "src": "pages/auth/login.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_Logo-BhJNsvHD.js",
+      "_classes-CdhUQLSs.js",
+      "_jsx-runtime-v47ECsj2.js"
+    ]
+  },
+  "pages/auth/register.jsx": {
+    "file": "assets/register-BQ8itpAC.js",
+    "name": "register",
+    "src": "pages/auth/register.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_Logo-BhJNsvHD.js",
+      "_classes-CdhUQLSs.js",
+      "_jsx-runtime-v47ECsj2.js"
+    ]
+  },
+  "pages/client/dashboard/index.jsx": {
+    "file": "assets/dashboard-DSbSSuuz.js",
+    "name": "dashboard",
+    "src": "pages/client/dashboard/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "pages/dashboard/DashboardShell.jsx",
+      "_jsx-runtime-v47ECsj2.js"
+    ]
+  },
+  "pages/dashboard/DashboardShell.jsx": {
+    "file": "assets/DashboardShell-9UYqJzLm.js",
+    "name": "DashboardShell",
+    "src": "pages/dashboard/DashboardShell.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_Logo-BhJNsvHD.js",
+      "_jsx-runtime-v47ECsj2.js"
+    ]
+  },
+  "pages/dashboard/index.jsx": {
+    "file": "assets/dashboard-BDJeKV9i.js",
+    "name": "dashboard",
+    "src": "pages/dashboard/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_Logo-BhJNsvHD.js",
+      "_classes-CdhUQLSs.js",
+      "_jsx-runtime-v47ECsj2.js"
+    ]
+  },
+  "pages/inertia_example/index.jsx": {
+    "file": "assets/inertia_example-Dmb-uPTY.js",
+    "name": "inertia_example",
+    "src": "pages/inertia_example/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_jsx-runtime-v47ECsj2.js"
+    ],
+    "css": [
+      "assets/inertia_example-DfVQzGtb.css"
+    ],
+    "assets": [
+      "assets/rails-6kKmFj25.svg"
+    ]
+  },
+  "pages/trainer/dashboard/index.jsx": {
+    "file": "assets/dashboard-DQa5Ud9x.js",
+    "name": "dashboard",
+    "src": "pages/trainer/dashboard/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "pages/dashboard/DashboardShell.jsx",
+      "_jsx-runtime-v47ECsj2.js"
+    ]
+  }
+}

@@ -4,8 +4,6 @@ class DashboardController < InertiaController
   before_action :authenticate_user!
 
   def index
-    render inertia: {
-      user: current_user.as_json(only: [:full_name, :email, :phone]),
-    }
+    redirect_to dashboard_path_for(current_user)
   end
 end

@@ -10,13 +10,27 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "auth#login"
+  root "auth#landing"
   get "login", to: "auth#login", as: :login
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy", as: :logout
   get "register", to: "auth#register", as: :register
   post "register", to: "registrations#create"
   get "dashboard", to: "dashboard#index", as: :dashboard
+
+  namespace :client do
+    get "dashboard", to: "dashboard#index"
+    post "trainer-link", to: "trainer_links#create", as: :trainer_link
+  end
+
+  namespace :trainer do
+    get "dashboard", to: "dashboard#index"
+    post "invite", to: "invites#create", as: :invite
+  end
+
+  namespace :admin do
+    get "dashboard", to: "dashboard#index"
+  end
 
   get "inertia-example", to: "inertia_example#index"
 end

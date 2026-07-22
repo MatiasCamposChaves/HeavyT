@@ -28,6 +28,7 @@ export default function Register() {
       email: "",
       phone: "",
       password: "",
+      role: "client",
     },
   })
 
@@ -51,6 +52,19 @@ export default function Register() {
           <h1 className={title}>Registrarse</h1>
 
           <form className={form} onSubmit={submit}>
+            <label className={field}>
+              <span className={label}>Tipo de cuenta</span>
+              <select
+                className={input}
+                value={data.user.role}
+                onChange={(event) => updateUser("role", event.target.value)}
+              >
+                <option value="client">Cliente</option>
+                <option value="trainer">Entrenador personal</option>
+              </select>
+              {errors.role && <p className={error}>{errorText(errors.role)}</p>}
+            </label>
+
             <label className={field}>
               <span className={label}>Nombre completo</span>
               <input

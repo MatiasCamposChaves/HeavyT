@@ -23,7 +23,22 @@ class ApplicationController < ActionController::Base
     redirect_to login_path
   end
 
+  def authorize_role!(*roles)
+    authenticate_user!
+    return if performed? || roles.map(&:to_s).include?(current_user.role)
+
+    redirect_to dashboard_path, alert: "No tienes permiso para acceder a esa sección."
+  end
+
+  def dashboard_path_for(user)
+    case user.role
+    when "admin" then admin_dashboard_path
+    when "trainer" then trainer_dashboard_path
+    else client_dashboard_path
+    end
+  end
+
   def redirect_signed_in_user
-    redirect_to dashboard_path if user_signed_in?
+    redirect_to dashboard_path_for(current_user) if user_signed_in?
   end
 end

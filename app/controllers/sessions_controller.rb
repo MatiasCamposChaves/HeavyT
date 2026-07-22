@@ -9,7 +9,7 @@ class SessionsController < InertiaController
     if user&.authenticate(session_params[:password])
       reset_session
       session[:user_id] = user.id
-      redirect_to dashboard_path
+      redirect_to dashboard_path_for(user)
     else
       redirect_to login_path, inertia: { errors: { auth: ["Correo o contrasena incorrectos"] } }
     end
