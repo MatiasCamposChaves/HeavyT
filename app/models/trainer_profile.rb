@@ -29,6 +29,10 @@ class TrainerProfile < ApplicationRecord
       return trainer_invites.create!(code: code, expires_at: INVITE_DURATION.from_now)
     rescue ActiveRecord::RecordNotUnique
       next
+    rescue ActiveRecord::RecordInvalid => error
+      raise unless error.record.errors[:code].any? && TrainerInvite.exists?(code: code)
+
+      next
     end
   end
 
