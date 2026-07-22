@@ -11,7 +11,6 @@ import {
   error,
   field,
   form,
-  formAlert,
   input,
   label,
   links,
@@ -27,6 +26,7 @@ function errorText(value) {
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
+  const [validationError, setValidationError] = useState("")
   const { data, setData, post, processing, errors } = useForm({
     session: {
       email: "",
@@ -36,25 +36,33 @@ export default function Login() {
 
   function submit(event) {
     event.preventDefault()
+    if (!data.session.email.trim()) {
+      setValidationError("Ingresa tu correo electrónico.")
+      return
+    }
+    if (!data.session.password) {
+      setValidationError("Ingresa tu contraseña.")
+      return
+    }
+
+    setValidationError("")
     post("/login")
   }
-
-  const loginError = errors.auth || errors.email
 
   return (
     <main className={authPage}>
       <Head title="Login" />
       <section className={authShell}>
         <div className={`${authPanel} relative`}>
-          <FlashToast />
+          <FlashToast kind="alert" message={validationError} />
           <div className={logoWrap}>
             <Logo compact />
           </div>
-          <h1 className={title}>Iniciar sesion</h1>
+          <h1 className={title}>Iniciar sesión</h1>
 
-          <form className={form} onSubmit={submit}>
+          <form className={form} noValidate onSubmit={submit}>
             <label className={field}>
-              <span className={label}>Correo electronico</span>
+              <span className={label}>Correo electrónico</span>
               <input
                 className={input}
                 type="email"
@@ -66,7 +74,7 @@ export default function Login() {
             </label>
 
             <label className={field}>
-              <span className={label}>Contrasena</span>
+              <span className={label}>Contraseña</span>
               <div className="relative">
                 <input
                   className={`${input} pr-12`}
@@ -81,19 +89,13 @@ export default function Login() {
               {errors.password && <p className={error}>{errorText(errors.password)}</p>}
             </label>
 
-            {loginError && (
-              <p className={formAlert} role="alert">
-                {errorText(loginError)}
-              </p>
-            )}
-
             <button className={`${selectionButton} mt-6 sm:mt-[26px]`} type="submit" disabled={processing}>
-              {processing ? "Ingresando..." : "Iniciar sesion"}
+              {processing ? "Ingresando..." : "Iniciar sesión"}
             </button>
           </form>
 
           <div className={links}>
-            <a className={textLink} href="mailto:soporte@heavyt.local">Olvide mi contrasena</a>
+            <a className={textLink} href="mailto:soporte@heavyt.local">Olvidé mi contraseña</a>
             <Link className={textLink} href="/register">No tienes cuenta? Registrate</Link>
           </div>
         </div>

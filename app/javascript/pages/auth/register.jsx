@@ -3,6 +3,7 @@ import { useState } from "react"
 
 import Logo from "./Logo"
 import PasswordVisibilityButton from "./PasswordVisibilityButton"
+import FlashToast from "../dashboard/FlashToast"
 import {
   authPage,
   authPanel,
@@ -25,12 +26,14 @@ function errorText(value) {
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
   const { data, setData, post, processing, errors } = useForm({
     user: {
       full_name: "",
       email: "",
       phone: "",
       password: "",
+      password_confirmation: "",
       role: "client",
     },
   })
@@ -44,17 +47,20 @@ export default function Register() {
     post("/register")
   }
 
+  const registrationError = Object.values(errors).flat().filter(Boolean).join(" · ")
+
   return (
     <main className={authPage}>
       <Head title="Registrar usuario" />
       <section className={authShell}>
-        <div className={authPanel}>
+        <div className={`${authPanel} relative`}>
+          <FlashToast kind="alert" message={registrationError} />
           <div className={logoWrap}>
             <Logo compact />
           </div>
           <h1 className={title}>Registrarse</h1>
 
-          <form className={form} onSubmit={submit}>
+          <form className={form} noValidate onSubmit={submit}>
             <label className={field}>
               <span className={label}>Tipo de cuenta</span>
               <select
@@ -116,6 +122,23 @@ export default function Register() {
               </div>
               {errors.password && <p className={error}>{errorText(errors.password)}</p>}
             </label>
+
+            <label className={field}>
+              <span className={label}>Confirmar contraseña</span>
+              <div className="relative">
+                <input
+                  className={`${input} pr-12`}
+                  type={showConfirmation ? "text" : "password"}
+                  autoComplete="new-password"
+                  value={data.user.password_confirmation}
+                  onChange={(event) => updateUser("password_confirmation", event.target.value)}
+                />
+                <PasswordVisibilityButton visible={showConfirmation} onToggle={() => setShowConfirmation((visible) => !visible)} />
+              </div>
+              {errors.password_confirmation && <p className={error}>{errorText(errors.password_confirmation)}</p>}
+            </label>
+
+            <p className="m-0 text-xs leading-5 text-[#aeb2ba]">La contraseña debe contener al menos 8 caracteres y ambas contraseñas deben coincidir.</p>
 
             <button className={`${selectionButton} mt-2.5`} type="submit" disabled={processing}>
               {processing ? "Creando cuenta..." : "Registrarse"}

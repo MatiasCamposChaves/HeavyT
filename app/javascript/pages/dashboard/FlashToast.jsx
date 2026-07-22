@@ -1,10 +1,10 @@
 import { usePage } from "@inertiajs/react"
 import { useEffect, useState } from "react"
 
-export default function FlashToast() {
+export default function FlashToast({ kind: suppliedKind, message: suppliedMessage } = {}) {
   const { flash } = usePage().props
-  const message = flash?.alert || flash?.notice
-  const kind = flash?.alert ? "alert" : "notice"
+  const message = suppliedMessage || flash?.alert || flash?.notice
+  const kind = suppliedKind || (flash?.alert ? "alert" : "notice")
   const [visible, setVisible] = useState(Boolean(message))
 
   useEffect(() => {

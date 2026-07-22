@@ -21,7 +21,15 @@ Rails.application.routes.draw do
   namespace :client do
     get "dashboard", to: "dashboard#index"
     post "trainer-link", to: "trainer_links#create", as: :trainer_link
-    resources :routines, only: [:index, :show]
+    resources :routines, only: [:index, :show] do
+      resources :workout_sessions, only: :create
+    end
+    resources :workout_sessions, path: "workouts", only: [:index, :show] do
+      member { patch :complete }
+      resources :exercise_results, only: :update
+    end
+    resource :progress, only: :show, controller: "progress"
+    resources :notifications, only: :index
     resource :profile, only: [:show, :update]
   end
 
@@ -29,8 +37,18 @@ Rails.application.routes.draw do
     get "dashboard", to: "dashboard#index"
     post "invite", to: "invites#create", as: :invite
     resources :routines do
-      resources :exercises, only: [:create, :update, :destroy]
+        resources :exercises, only: [:create, :update, :destroy] do
+          member { patch :move }
+        end
       resource :assignments, only: :create, controller: "routine_assignments"
+    end
+    resources :workout_sessions, path: "workouts", only: [:index, :show, :destroy]
+    resources :progress, only: [:index, :show], controller: "progress"
+    resources :notifications, only: :index do
+      member do
+        patch :extend_assignment
+        patch :archive_assignment
+      end
     end
     resource :profile, only: [:show, :update]
   end

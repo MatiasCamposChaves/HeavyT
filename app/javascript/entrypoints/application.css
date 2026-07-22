@@ -4,6 +4,20 @@
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
 
+@font-face { font-family: "Alegreya Sans SC"; font-style: normal; font-weight: 400; font-display: swap; src: url("@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya Sans SC"; font-style: normal; font-weight: 700; font-display: swap; src: url("@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya Sans SC"; font-style: normal; font-weight: 800; font-display: swap; src: url("@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya Sans SC"; font-style: normal; font-weight: 900; font-display: swap; src: url("@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 400; font-display: swap; src: url("@fontsource/roboto/files/roboto-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 500; font-display: swap; src: url("@fontsource/roboto/files/roboto-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 700; font-display: swap; src: url("@fontsource/roboto/files/roboto-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 900; font-display: swap; src: url("@fontsource/roboto/files/roboto-latin-900-normal.woff2") format("woff2"); }
+
+:root {
+  --font-heading: "Alegreya Sans SC", sans-serif;
+  --font-body: "Roboto", sans-serif;
+}
+
 html,
 body,
 #app {
@@ -11,5 +25,23 @@ body,
 }
 
 body {
+  font-family: var(--font-body);
   margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[role="heading"] {
+  font-family: var(--font-heading);
 }

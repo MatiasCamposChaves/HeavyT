@@ -6,16 +6,16 @@ class SessionsController < InertiaController
   def create
     user = User.find_by(email: session_params[:email].to_s.strip.downcase)
 
-    if user&.authenticate(session_params[:password])
-      if user.blocked?
-        redirect_to login_path, alert: "Tu cuenta está bloqueada. Comunícate con administración para recuperar el acceso."
-      else
-        reset_session
-        session[:user_id] = user.id
-        redirect_to dashboard_path_for(user)
-      end
+    if user.nil?
+      redirect_to login_path, alert: "El correo electrónico no está registrado."
+    elsif !user.authenticate(session_params[:password])
+      redirect_to login_path, alert: "Usuario o contraseña incorrecta."
+    elsif user.blocked?
+      redirect_to login_path, alert: "Tu cuenta está bloqueada. Comunícate con administración para recuperar el acceso."
     else
-      redirect_to login_path, inertia: { errors: { auth: ["Correo o contrasena incorrectos"] } }
+      reset_session
+      session[:user_id] = user.id
+      redirect_to dashboard_path_for(user)
     end
   end
 

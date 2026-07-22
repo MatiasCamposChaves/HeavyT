@@ -1,10 +1,10 @@
 export const authPage =
   "flex min-h-dvh items-center justify-center bg-[#2b2d31] bg-[radial-gradient(circle_at_50%_38%,rgb(229_37_59_/_0.11),transparent_28%)] px-4 py-6 text-[#f6f7fb] font-sans sm:px-5 sm:py-5"
 
-export const authShell = "w-full max-w-[340px] sm:max-w-[300px]"
+export const authShell = "w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[460px]"
 
 export const authPanel =
-  "box-border w-full bg-[#171a20] px-7 py-7 shadow-[0_22px_60px_rgb(0_0_0_/_0.22)] sm:min-h-[482px] sm:px-[34px] sm:py-[26px]"
+  "box-border w-full bg-[#171a20] px-7 py-7 shadow-[0_22px_60px_rgb(0_0_0_/_0.22)] sm:min-h-[482px] sm:rounded-xl sm:px-10 sm:py-9 lg:border lg:border-[#343840] lg:px-12"
 
 export const logoWrap = "flex justify-center"
 
@@ -18,7 +18,7 @@ export const field = "grid gap-[7px]"
 export const label = "text-sm font-extrabold text-[#f0f1f5]"
 
 export const input =
-  "h-11 w-full rounded-[9px] border border-[#2b2f34] bg-[#2b2f34] px-3 text-base text-white outline-none focus:border-[#e5253b] focus:shadow-[0_0_0_3px_rgb(229_37_59_/_0.18)] sm:h-[39px] sm:text-[15px]"
+  "h-11 w-full rounded-[9px] border border-[#2b2f34] bg-[#2b2f34] px-3 text-base text-white outline-none focus:border-[#e5253b] focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-[0_0_0_3px_rgb(229_37_59_/_0.28)] sm:h-[39px] sm:text-[15px]"
 
 export const error = "m-0 text-xs font-bold text-[#ff8391]"
 

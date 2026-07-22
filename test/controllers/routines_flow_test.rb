@@ -28,14 +28,45 @@ class RoutinesFlowTest < ActionDispatch::IntegrationTest
 
     assert_difference("Exercise.count", 1) do
       post trainer_routine_exercises_path(routine), params: {
-        exercise: { name: "Sentadilla", sets: 4, repetitions: 8, rest_seconds: 90 },
+        exercise: { name: "Sentadilla", sets: 4, repetitions: 8, rest_seconds: 90, position: 99 },
       }
     end
     exercise = routine.exercises.last
+    assert_equal 1, exercise.position
 
     patch trainer_routine_exercise_path(routine, exercise), params: { exercise: { repetitions: 10 } }
     assert_equal 10, exercise.reload.repetitions
     assert_difference("Exercise.count", -1) { delete trainer_routine_exercise_path(routine, exercise) }
+  end
+
+  test "trainer reorders exercises and positions stay consecutive" do
+    routine = @trainer.trainer_profile.routines.create!(name: "Ordenada")
+    first = routine.exercises.create!(name: "Primero", sets: 3, repetitions: 10, position: 1)
+    second = routine.exercises.create!(name: "Segundo", sets: 3, repetitions: 10, position: 2)
+    third = routine.exercises.create!(name: "Tercero", sets: 3, repetitions: 10, position: 3)
+    sign_in(@trainer)
+
+    patch move_trainer_routine_exercise_path(routine, third), params: { direction: "up" }
+
+    assert_redirected_to trainer_routine_path(routine)
+    assert_equal [first.id, third.id, second.id], routine.exercises.reload.order(:position).pluck(:id)
+    assert_equal [1, 2, 3], routine.exercises.order(:position).pluck(:position)
+
+    delete trainer_routine_exercise_path(routine, first)
+    assert_equal [1, 2], routine.exercises.reload.order(:position).pluck(:position)
+  end
+
+  test "trainer assigns exercises to separate days" do
+    routine = @trainer.trainer_profile.routines.create!(name: "Plan semanal")
+    sign_in(@trainer)
+
+    post trainer_routine_exercises_path(routine), params: { exercise: { name: "Sentadilla", sets: 3, repetitions: 10, day_of_week: 1 } }
+    post trainer_routine_exercises_path(routine), params: { exercise: { name: "Remo", sets: 3, repetitions: 10, day_of_week: 2 } }
+
+    assert_equal ["Sentadilla"], routine.exercises.where(day_of_week: 1).pluck(:name)
+    assert_equal ["Remo"], routine.exercises.where(day_of_week: 2).pluck(:name)
+    assert_equal [1], routine.exercises.where(day_of_week: 1).pluck(:position)
+    assert_equal [1], routine.exercises.where(day_of_week: 2).pluck(:position)
   end
 
   test "trainer assigns routine and client can view it" do
@@ -44,9 +75,11 @@ class RoutinesFlowTest < ActionDispatch::IntegrationTest
     sign_in(@trainer)
 
     post trainer_routine_assignments_path(routine), params: {
-      assignment: { client_profile_ids: [@client.client_profile.id] },
+      assignment: { client_profile_ids: [@client.client_profile.id], duration_weeks: 4 },
     }
     assert_redirected_to trainer_routine_path(routine)
+    assignment = routine.routine_assignments.find_by!(client_profile: @client.client_profile)
+    assert_equal Date.current + 4.weeks, assignment.expires_on
 
     delete logout_path
     sign_in(@client)

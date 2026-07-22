@@ -16,17 +16,17 @@ export default function AdminUsers({ filters, user, users }) {
     <Head title="Gestionar usuarios" />
     <h1 className="mb-4 text-xl font-extrabold uppercase">Gestionar usuarios</h1>
 
-    <form className={`${card} mb-4 grid gap-3`} onSubmit={submit}>
+    <form className={`${card} mb-4 grid gap-3 lg:grid-cols-[minmax(220px,2fr)_1fr_1fr_auto] lg:items-end`} noValidate onSubmit={submit}>
       <label className="grid gap-1 text-xs font-bold uppercase text-[#aeb2ba]">Buscar<input className={inputClass} placeholder="Nombre o correo" value={data.q} onChange={(event) => setData("q", event.target.value)} /></label>
-      <div className="grid grid-cols-1 gap-2 min-[380px]:grid-cols-2">
+      <div className="contents">
         <label className="grid gap-1 text-xs font-bold uppercase text-[#aeb2ba]">Rol<select className={inputClass} value={data.role} onChange={(event) => setData("role", event.target.value)}><option value="">Todos</option><option value="client">Clientes</option><option value="trainer">Entrenadores</option></select></label>
         <label className="grid gap-1 text-xs font-bold uppercase text-[#aeb2ba]">Estado<select className={inputClass} value={data.status} onChange={(event) => setData("status", event.target.value)}><option value="">Todos</option><option value="active">Activos</option><option value="blocked">Bloqueados</option></select></label>
       </div>
-      <button className={`${primaryButton} w-full border-0`} disabled={processing} type="submit"><i className="bi bi-search mr-2" />Buscar</button>
+      <button className={`${primaryButton} w-full border-0 lg:w-auto`} disabled={processing} type="submit"><i className="bi bi-search mr-2" />Buscar</button>
     </form>
 
     <p className="mb-3 text-xs font-bold uppercase text-[#aeb2ba]">{users.length} resultado(s)</p>
-    <div className="grid gap-3">
+    <div className="grid gap-3 lg:grid-cols-2 lg:gap-4">
       {users.length === 0 ? <p className={card}>No se encontraron usuarios.</p> : users.map((managedUser) => (
         <Link className={`${card} block no-underline`} href={`/admin/users/${managedUser.id}`} key={managedUser.id}>
           <div className="flex items-start justify-between gap-3"><strong className="text-white">{managedUser.full_name}</strong><span className={`rounded-full px-2 py-1 text-[10px] font-extrabold uppercase ${managedUser.blocked ? "bg-[#e5253b]/20 text-[#ff8391]" : "bg-emerald-500/15 text-emerald-300"}`}>{managedUser.blocked ? "Bloqueado" : "Activo"}</span></div>

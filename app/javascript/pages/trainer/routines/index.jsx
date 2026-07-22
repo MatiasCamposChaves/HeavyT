@@ -10,7 +10,7 @@ export default function RoutinesIndex({ routines, user }) {
         <h1 className="m-0 text-xl font-extrabold uppercase">Mis rutinas</h1>
         <Link className={primaryButton} href="/trainer/routines/new">Nueva</Link>
       </div>
-      <div className="grid gap-3">
+      <div className="grid gap-3 lg:grid-cols-2 lg:gap-4">
         {routines.length === 0 ? <p className={card}>Todavía no has creado rutinas.</p> : routines.map((routine) => (
           <Link className={`${card} block no-underline`} href={`/trainer/routines/${routine.id}`} key={routine.id}>
             <div className="mb-2 flex justify-between gap-3">

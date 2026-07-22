@@ -1,16 +1,36 @@
 import { Head, Link, useForm } from "@inertiajs/react"
+import { useState } from "react"
 
 import DashboardShell, { card, primaryButton } from "../../dashboard/DashboardShell"
-import ExerciseForm from "./ExerciseForm"
+import ExerciseForm, { dayOptions } from "./ExerciseForm"
+
+function ExerciseRow({ exercise, exercises, index, routineId }) {
+  return <div className="flex items-start gap-2 rounded-lg bg-[#171a20] p-3">
+    <details className="min-w-0 flex-1">
+      <summary className="cursor-pointer font-extrabold">{exercise.position}. {exercise.name} — {exercise.sets}×{exercise.repetitions}</summary>
+      <div className="mt-4"><ExerciseForm exercise={exercise} routineId={routineId} /></div>
+    </details>
+    <div className="flex shrink-0 gap-1">
+      {index > 0 ? <Link aria-label={`Mover ${exercise.name} hacia arriba`} as="button" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-white transition hover:border-[#e5253b] hover:bg-[#c91f33]" href={`/trainer/routines/${routineId}/exercises/${exercise.id}/move?direction=up`} method="patch" preserveScroll><i className="bi bi-arrow-up" /></Link> : <button aria-label="Ya es el primer ejercicio del día" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-[#60656e]" disabled type="button"><i className="bi bi-arrow-up" /></button>}
+      {index < exercises.length - 1 ? <Link aria-label={`Mover ${exercise.name} hacia abajo`} as="button" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-white transition hover:border-[#e5253b] hover:bg-[#c91f33]" href={`/trainer/routines/${routineId}/exercises/${exercise.id}/move?direction=down`} method="patch" preserveScroll><i className="bi bi-arrow-down" /></Link> : <button aria-label="Ya es el último ejercicio del día" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-[#60656e]" disabled type="button"><i className="bi bi-arrow-down" /></button>}
+    </div>
+  </div>
+}
 
 export default function RoutineShow({ clients, routine, user }) {
+  const [selectedDay, setSelectedDay] = useState(1)
   const initiallySelected = clients.filter((client) => client.assigned).map((client) => String(client.client_profile_id))
-  const { data, errors, post, processing, setData } = useForm({ assignment: { client_profile_ids: initiallySelected } })
+  const { data, errors, post, processing, setData } = useForm({
+    assignment: {
+      client_profile_ids: initiallySelected,
+      duration_weeks: 4,
+    },
+  })
 
   function toggleClient(id) {
     const value = String(id)
     const selected = data.assignment.client_profile_ids
-    setData("assignment", {
+    setData("assignment", { ...data.assignment,
       client_profile_ids: selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value],
     })
   }
@@ -33,33 +53,45 @@ export default function RoutineShow({ clients, routine, user }) {
       {routine.description && <p className="mb-4 text-sm leading-6 text-[#c8cbd2]">{routine.description}</p>}
       <div className="grid gap-4">
         <section className={card}>
-          <h2 className="mb-3 font-extrabold uppercase">Agregar ejercicio</h2>
-          <ExerciseForm routineId={routine.id} />
+          <h2 className="mb-3 font-extrabold uppercase">Agregar ejercicio por día</h2>
+          <div className="mb-4 flex flex-wrap gap-2">
+            {dayOptions.map((day) => <button className={`rounded-lg px-3 py-2 text-xs font-extrabold transition ${selectedDay === day.value ? "bg-[#e5253b] text-white" : "bg-[#171a20] text-[#c8cbd2] hover:bg-[#343840] hover:text-white"}`} key={day.value} onClick={() => setSelectedDay(day.value)} type="button">{day.label}</button>)}
+          </div>
+          <ExerciseForm defaultDay={selectedDay} key={`new-${selectedDay}`} routineId={routine.id} />
         </section>
 
         <section className={card}>
           <h2 className="mb-3 font-extrabold uppercase">Ejercicios ({routine.exercises.length})</h2>
-          <div className="grid gap-3">
-            {routine.exercises.length === 0 ? <p className="m-0 text-[#c8cbd2]">Agrega el primer ejercicio para poder asignar la rutina.</p> : routine.exercises.map((exercise) => (
-              <details className="rounded-lg bg-[#171a20] p-3" key={exercise.id}>
-                <summary className="cursor-pointer font-extrabold">{exercise.position}. {exercise.name} — {exercise.sets}×{exercise.repetitions}</summary>
-                <div className="mt-4"><ExerciseForm exercise={exercise} routineId={routine.id} /></div>
-              </details>
-            ))}
-          </div>
+          {routine.exercises.length === 0 ? <p className="m-0 text-[#c8cbd2]">Agrega el primer ejercicio para poder asignar la rutina.</p> : <div className="grid gap-5">
+            {dayOptions.map((day) => {
+              const exercises = routine.exercises.filter((exercise) => exercise.day_of_week === day.value)
+              if (exercises.length === 0) return null
+              return <section className="grid gap-2" key={day.value}>
+                <h3 className="m-0 border-b border-[#3b4049] pb-2 text-base font-extrabold uppercase text-[#ff6476]">{day.label}</h3>
+                {exercises.map((exercise, index) => <ExerciseRow exercise={exercise} exercises={exercises} index={index} key={exercise.id} routineId={routine.id} />)}
+              </section>
+            })}
+          </div>}
         </section>
 
         <section className={card}>
           <h2 className="mb-2 font-extrabold uppercase">Asignar clientes</h2>
           <p className="mb-3 text-[#c8cbd2]">Al asignarla, la rutina cambiará automáticamente a activa.</p>
-          <form className="grid gap-3" onSubmit={assign}>
+          <form className="grid gap-3" noValidate onSubmit={assign}>
+            <div className="grid gap-3 sm:max-w-sm">
+              <label className="grid gap-2 text-xs font-bold uppercase text-[#aeb2ba]">
+                Vigencia (semanas)
+                <input className="h-11 rounded-lg border border-[#3b4049] bg-[#171a20] px-3 text-sm text-white outline-none focus:border-[#e5253b]" min="1" max="52" type="number" value={data.assignment.duration_weeks} onChange={(event) => setData("assignment", { ...data.assignment, duration_weeks: event.target.value })} />
+              </label>
+            </div>
             {clients.length === 0 ? <p className="m-0 text-[#c8cbd2]">Primero vincula al menos un cliente.</p> : clients.map((client) => (
               <label className="flex items-center gap-3 rounded-lg bg-[#171a20] p-3" key={client.client_profile_id}>
                 <input checked={data.assignment.client_profile_ids.includes(String(client.client_profile_id))} type="checkbox" onChange={() => toggleClient(client.client_profile_id)} />
-                <span><strong className="block">{client.full_name}</strong><small className="text-[#aeb2ba]">{client.email}{client.assigned ? " · Ya asignada" : ""}</small></span>
+                <span><strong className="block">{client.full_name}</strong><small className="text-[#aeb2ba]">{client.email}{client.assigned ? ` · Ya asignada${client.expires_on ? ` · vence ${client.expires_on}` : ""}` : ""}</small></span>
               </label>
             ))}
             {errors.clients && <p className="m-0 text-xs font-bold text-[#ff8391]">{Array.isArray(errors.clients) ? errors.clients.join(", ") : errors.clients}</p>}
+            {errors.schedule && <p className="m-0 text-xs font-bold text-[#ff8391]">{Array.isArray(errors.schedule) ? errors.schedule.join(", ") : errors.schedule}</p>}
             {clients.length > 0 && <button className={`${primaryButton} w-full border-0`} disabled={processing} type="submit">{processing ? "Asignando..." : "Finalizar y asignar"}</button>}
           </form>
         </section>

@@ -35,7 +35,7 @@ export default function ProfilePage({ user }) {
     <DashboardShell user={user}>
       <Head title="Mi perfil" />
       <h1 className="mb-5 text-xl font-extrabold uppercase">Mi perfil</h1>
-      <form className="grid gap-4" onSubmit={submit}>
+      <form className="grid gap-4" noValidate onSubmit={submit}>
         <section className={`${card} grid gap-4`}>
           <label className="grid gap-2 text-xs font-bold uppercase text-[#aeb2ba]">
             Nombre completo

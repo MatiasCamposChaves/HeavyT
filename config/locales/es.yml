@@ -1,0 +1,22 @@
+es:
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "no puede estar vacío"
+      confirmation: "no coincide"
+      invalid: "no es válido"
+      taken: "ya está registrado"
+      too_short: "debe tener al menos %{count} caracteres"
+      too_long: "no puede superar %{count} caracteres"
+      inclusion: "no es una opción válida"
+      not_a_number: "debe ser un número"
+      greater_than_or_equal_to: "debe ser mayor o igual a %{count}"
+  activerecord:
+    attributes:
+      user:
+        full_name: "Nombre completo"
+        email: "Correo electrónico"
+        phone: "Teléfono"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
+        role: "Tipo de cuenta"

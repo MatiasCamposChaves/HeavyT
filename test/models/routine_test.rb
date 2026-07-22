@@ -24,6 +24,35 @@ class RoutineTest < ActiveSupport::TestCase
     assert_includes client.client_profile.routines, routine
   end
 
+  test "expired assignment is no longer active and can be extended" do
+    trainer = create_user("trainer")
+    client = create_user("client")
+    client.client_profile.update!(trainer_profile: trainer.trainer_profile, linked_at: Time.current)
+    routine = trainer.trainer_profile.routines.create!(name: "Espalda", status: "active")
+    assignment = routine.routine_assignments.create!(client_profile: client.client_profile, assigned_at: Time.current,
+      expires_on: Date.current)
+
+    assert_not_includes client.client_profile.routine_assignments.active, assignment
+    assignment.extend_for_weeks!(1)
+    assert_equal Date.current + 1.week, assignment.reload.expires_on
+    assert_includes client.client_profile.routine_assignments.active, assignment
+  end
+
+  test "routine with workout history can be deleted" do
+    trainer = create_user("trainer")
+    client = create_user("client")
+    client.client_profile.update!(trainer_profile: trainer.trainer_profile, linked_at: Time.current)
+    routine = trainer.trainer_profile.routines.create!(name: "Pierna", status: "active")
+    exercise = routine.exercises.create!(name: "Sentadilla", sets: 3, repetitions: 10, position: 1)
+    assignment = routine.routine_assignments.create!(client_profile: client.client_profile, assigned_at: Time.current)
+    workout = assignment.workout_sessions.create!(started_at: Time.current)
+    workout.exercise_results.create!(exercise: exercise)
+
+    assert_difference("Routine.count", -1) { routine.destroy! }
+    assert_not WorkoutSession.exists?(workout.id)
+    assert_not ExerciseResult.exists?(exercise_id: exercise.id)
+  end
+
   private
 
   def create_user(role)

@@ -6,28 +6,34 @@ module Client
     before_action :set_profile
 
     def index
-      routines = @profile.routines.where(status: "active").includes(:exercises, :trainer_profile)
-        .order("routine_assignments.assigned_at DESC")
+      assignments = @profile.routine_assignments.active.includes(routine: [:exercises, { trainer_profile: :user }])
+        .order(assigned_at: :desc)
       render inertia: {
         user: user_json,
-        routines: routines.map do |routine|
-          assignment = routine.routine_assignments.find { |item| item.client_profile_id == @profile.id }
+        routines: assignments.filter_map do |assignment|
+          routine = assignment.routine
+          next unless routine.status == "active"
+
           routine.as_json(only: [:id, :name, :description, :goal]).merge(
             exercises_count: routine.exercises.size,
-            assigned_at: assignment&.assigned_at,
+            assigned_at: assignment.assigned_at,
+            expires_on: assignment.expires_on,
           )
         end,
       }
     end
 
     def show
-      routine = @profile.routines.where(status: "active").find(params[:id])
+      assignment = @profile.routine_assignments.active.includes(routine: [:exercises, { trainer_profile: :user }]).find_by!(routine_id: params[:id])
+      routine = assignment.routine
+      raise ActiveRecord::RecordNotFound unless routine.status == "active"
       render inertia: {
         user: user_json,
         routine: routine.as_json(only: [:id, :name, :description, :goal]).merge(
           trainer_name: routine.trainer_profile.user.full_name,
+          expires_on: assignment.expires_on,
           exercises: routine.exercises.as_json(
-            only: [:id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position],
+            only: [:id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week],
           ),
         ),
       }

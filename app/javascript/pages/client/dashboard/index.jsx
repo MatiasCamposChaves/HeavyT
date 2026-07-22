@@ -6,7 +6,28 @@ function errorText(value) {
   return Array.isArray(value) ? value.join(", ") : value
 }
 
-export default function ClientDashboard({ trainer, user }) {
+function TodayWorkout({ workout }) {
+  const completed = workout.workout_status === "completed"
+  const inProgress = workout.workout_status === "in_progress"
+  const href = inProgress || completed ? `/client/workouts/${workout.workout_id}` : `/client/routines/${workout.routine_id}/workout_sessions?day_of_week=${workout.day_of_week}`
+
+  return <article className={`${card} ${completed ? "border border-emerald-500/40" : ""}`}>
+    <div className="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <p className="mb-1 text-xs font-extrabold uppercase text-[#e5253b]">{workout.day_name}</p>
+        <h3 className="m-0 text-lg font-extrabold">{workout.routine_name}</h3>
+        <p className="mb-0 mt-2 text-xs text-[#aeb2ba]">{workout.exercises_count} ejercicios</p>
+      </div>
+      {completed && <span className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-300"><i className="bi bi-check-circle-fill" />Completado</span>}
+    </div>
+    <Link as="button" className={`${primaryButton} mt-4 w-full sm:w-auto`} href={href} method={inProgress || completed ? "get" : "post"}>
+      <i className={`bi ${completed ? "bi-eye" : inProgress ? "bi-play-circle" : "bi-play-fill"} mr-2`} />
+      {completed ? "Ver entrenamiento" : inProgress ? "Continuar entrenamiento" : "Comenzar entrenamiento"}
+    </Link>
+  </article>
+}
+
+export default function ClientDashboard({ today_workouts = [], trainer, user }) {
   const { data, errors, post, processing, setData } = useForm({
     trainer_link: { code: "" },
   })
@@ -19,11 +40,17 @@ export default function ClientDashboard({ trainer, user }) {
   return (
     <DashboardShell user={user}>
       <Head title="Inicio del cliente" />
-      <h1 className="mb-5 text-xl font-extrabold uppercase">Bienvenido, {user.full_name.split(" ")[0]}</h1>
+      <h1 className="mb-5 text-xl font-extrabold uppercase lg:text-right">Bienvenido, {user.full_name.split(" ")[0]}</h1>
 
       {trainer ? (
         <div className="grid gap-4">
-        <section className={card}>
+        <section>
+          <div className="mb-3 flex items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold uppercase">Entrenamiento de hoy</h2><Link className="text-sm font-bold text-[#ff6476]" href="/client/notifications"><i className="bi bi-bell mr-2" />Notificaciones</Link></div>
+          <div className="grid gap-3 lg:max-w-2xl">
+            {today_workouts.length === 0 ? <div className={card}><i className="bi bi-cup-hot mb-3 block text-2xl text-[#ff6476]" /><h3 className="m-0 text-base font-extrabold">Día de descanso</h3><p className="mb-0 mt-2 text-[#c8cbd2]">No tienes ejercicios programados para hoy.</p></div> : today_workouts.map((workout) => <TodayWorkout key={workout.routine_id} workout={workout} />)}
+          </div>
+        </section>
+        <section className={`${card} lg:max-w-2xl`}>
           <p className="mb-1 text-xs font-bold uppercase text-[#e5253b]">Tu entrenador</p>
           <h2 className="mb-4 text-lg font-extrabold">{trainer.full_name}</h2>
           <dl className="m-0 grid gap-3 text-sm">
@@ -44,7 +71,7 @@ export default function ClientDashboard({ trainer, user }) {
           <h2 className="mb-2 font-extrabold uppercase">Vincular entrenador</h2>
           <p className="mb-4 leading-6 text-[#c8cbd2]">Ingresa el código de seis caracteres que te compartió tu entrenador. El código vence después de 24 horas.</p>
 
-          <form className="grid gap-3" onSubmit={submit}>
+          <form className="grid gap-3" noValidate onSubmit={submit}>
             <label className="grid gap-2">
               <span className="text-xs font-bold uppercase text-[#aeb2ba]">Código del entrenador</span>
               <input

@@ -32,7 +32,7 @@ export default function RoutineForm({ routine }) {
   }
 
   return (
-    <form className="grid gap-4" onSubmit={submit}>
+    <form className="grid gap-4" noValidate onSubmit={submit}>
       <label className={fieldClass}>
         <span className={labelClass}>Nombre de la rutina</span>
         <input className={inputClass} required value={data.routine.name} onChange={(event) => update("name", event.target.value)} />

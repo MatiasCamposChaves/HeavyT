@@ -35,7 +35,9 @@ export default function TrainerDashboard({ clients, invite, user }) {
       <p className="mb-5 text-sm leading-6 text-[#c8cbd2]">Comparte tu código para vincular clientes a tu cuenta.</p>
 
       <div className="grid gap-4">
-        <Link className={`${primaryButton} w-full`} href="/trainer/routines">Administrar rutinas</Link>
+        <Link className={`${primaryButton} w-full lg:w-[240px]`} href="/trainer/routines">Administrar rutinas</Link>
+        <Link className="inline-flex min-h-10 w-full items-center justify-center rounded-lg border border-[#e5253b] px-4 text-sm font-extrabold text-white no-underline transition hover:bg-[#c91f33] lg:w-[240px]" href="/trainer/workouts"><i className="bi bi-activity mr-2" />Actividad de clientes</Link>
+        <Link className="inline-flex min-h-10 w-full items-center justify-center rounded-lg border border-[#e5253b] px-4 text-sm font-extrabold text-white no-underline transition hover:bg-[#c91f33] lg:w-[240px]" href="/trainer/progress"><i className="bi bi-graph-up-arrow mr-2" />Progreso de clientes</Link>
         <section className={card}>
           <p className="mb-1 text-xs font-bold uppercase text-[#aeb2ba]">Clientes vinculados</p>
           <strong className="text-3xl">{clients.length}</strong>
@@ -57,7 +59,7 @@ export default function TrainerDashboard({ clients, invite, user }) {
           ) : (
             <p className="mb-4 leading-6 text-[#c8cbd2]">Todavía no tienes un código activo.</p>
           )}
-          <button className={`${primaryButton} w-full border-0`} type="button" disabled={processing} onClick={generateCode}>
+          <button className={`${primaryButton} w-full border-0 lg:w-[240px]`} type="button" disabled={processing} onClick={generateCode}>
             {processing ? "Generando..." : invite ? "Regenerar código" : "Generar código"}
           </button>
           {invite && <p className="mb-0 mt-3 text-xs text-[#9da2ab]">Regenerarlo desactivará inmediatamente el código anterior.</p>}

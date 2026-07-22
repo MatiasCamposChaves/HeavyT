@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_030000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_22_060000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,8 +24,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_030000) do
     t.index ["user_id"], name: "index_client_profiles_on_user_id", unique: true
   end
 
+  create_table "exercise_results", force: :cascade do |t|
+    t.integer "actual_repetitions", default: 0, null: false
+    t.decimal "actual_weight_lb", precision: 7, scale: 2
+    t.boolean "completed", default: false, null: false
+    t.integer "completed_sets", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.bigint "exercise_id", null: false
+    t.text "notes"
+    t.datetime "updated_at", null: false
+    t.bigint "workout_session_id", null: false
+    t.index ["exercise_id"], name: "index_exercise_results_on_exercise_id"
+    t.index ["workout_session_id", "exercise_id"], name: "index_exercise_results_on_workout_session_id_and_exercise_id", unique: true
+    t.index ["workout_session_id"], name: "index_exercise_results_on_workout_session_id"
+  end
+
   create_table "exercises", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "day_of_week", default: 1, null: false
     t.string "name", null: false
     t.text "notes"
     t.integer "position", default: 1, null: false
@@ -35,6 +51,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_030000) do
     t.integer "sets", null: false
     t.decimal "suggested_weight_lb", precision: 7, scale: 2
     t.datetime "updated_at", null: false
+    t.index ["routine_id", "day_of_week", "position"], name: "index_exercises_on_routine_day_and_position"
     t.index ["routine_id", "position"], name: "index_exercises_on_routine_id_and_position"
     t.index ["routine_id"], name: "index_exercises_on_routine_id"
   end
@@ -43,12 +60,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_030000) do
     t.datetime "assigned_at", null: false
     t.bigint "client_profile_id", null: false
     t.datetime "created_at", null: false
+    t.date "expires_on"
     t.bigint "routine_id", null: false
     t.string "status", default: "active", null: false
     t.datetime "updated_at", null: false
     t.index ["client_profile_id"], name: "index_routine_assignments_on_client_profile_id"
     t.index ["routine_id", "client_profile_id"], name: "index_assignments_on_routine_and_client", unique: true
     t.index ["routine_id"], name: "index_routine_assignments_on_routine_id"
+    t.index ["status", "expires_on"], name: "index_routine_assignments_on_status_and_expires_on"
   end
 
   create_table "routines", force: :cascade do |t|
@@ -96,12 +115,29 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_030000) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  create_table "workout_sessions", force: :cascade do |t|
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.integer "day_of_week"
+    t.text "notes"
+    t.bigint "routine_assignment_id", null: false
+    t.datetime "started_at", null: false
+    t.string "status", default: "in_progress", null: false
+    t.datetime "updated_at", null: false
+    t.index ["routine_assignment_id", "day_of_week", "status"], name: "index_workouts_on_assignment_day_and_status"
+    t.index ["routine_assignment_id", "status"], name: "index_workout_sessions_on_routine_assignment_id_and_status"
+    t.index ["routine_assignment_id"], name: "index_workout_sessions_on_routine_assignment_id"
+  end
+
   add_foreign_key "client_profiles", "trainer_profiles"
   add_foreign_key "client_profiles", "users"
+  add_foreign_key "exercise_results", "exercises"
+  add_foreign_key "exercise_results", "workout_sessions"
   add_foreign_key "exercises", "routines"
   add_foreign_key "routine_assignments", "client_profiles"
   add_foreign_key "routine_assignments", "routines"
   add_foreign_key "routines", "trainer_profiles"
   add_foreign_key "trainer_invites", "trainer_profiles"
   add_foreign_key "trainer_profiles", "users"
+  add_foreign_key "workout_sessions", "routine_assignments"
 end

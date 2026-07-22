@@ -12,7 +12,7 @@ class UserTest < ActiveSupport::TestCase
     user = build_user(role: "super_admin")
 
     assert_not user.valid?
-    assert_includes user.errors[:role], "is not included in the list"
+    assert_includes user.errors[:role], "no es una opción válida"
   end
 
   private

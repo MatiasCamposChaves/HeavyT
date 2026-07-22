@@ -1,4 +1,36 @@
 {
+  "../../node_modules/@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-400-normal.woff2": {
+    "file": "assets/alegreya-sans-sc-latin-400-normal-E7HoNan_.woff2",
+    "src": "../../node_modules/@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-400-normal.woff2"
+  },
+  "../../node_modules/@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-700-normal.woff2": {
+    "file": "assets/alegreya-sans-sc-latin-700-normal-B3GxztBF.woff2",
+    "src": "../../node_modules/@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-700-normal.woff2"
+  },
+  "../../node_modules/@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-800-normal.woff2": {
+    "file": "assets/alegreya-sans-sc-latin-800-normal-BWcIw4uc.woff2",
+    "src": "../../node_modules/@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-800-normal.woff2"
+  },
+  "../../node_modules/@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-900-normal.woff2": {
+    "file": "assets/alegreya-sans-sc-latin-900-normal-B5B3KT4p.woff2",
+    "src": "../../node_modules/@fontsource/alegreya-sans-sc/files/alegreya-sans-sc-latin-900-normal.woff2"
+  },
+  "../../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2": {
+    "file": "assets/roboto-latin-400-normal-BqEyEoaF.woff2",
+    "src": "../../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2"
+  },
+  "../../node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2": {
+    "file": "assets/roboto-latin-500-normal-7RbcRiD8.woff2",
+    "src": "../../node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2"
+  },
+  "../../node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2": {
+    "file": "assets/roboto-latin-700-normal-BZpUvMxY.woff2",
+    "src": "../../node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2"
+  },
+  "../../node_modules/@fontsource/roboto/files/roboto-latin-900-normal.woff2": {
+    "file": "assets/roboto-latin-900-normal-lk0O8k6m.woff2",
+    "src": "../../node_modules/@fontsource/roboto/files/roboto-latin-900-normal.woff2"
+  },
   "../../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
     "file": "assets/bootstrap-icons-BeopsB42.woff",
     "src": "../../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
@@ -7,59 +39,59 @@
     "file": "assets/bootstrap-icons-mSm7cUeB.woff2",
     "src": "../../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
-  "_DashboardShell-Ck3TnMJn.js": {
-    "file": "assets/DashboardShell-Ck3TnMJn.js",
+  "_DashboardShell-BpC0KnV6.js": {
+    "file": "assets/DashboardShell-BpC0KnV6.js",
     "name": "DashboardShell",
     "imports": [
       "entrypoints/inertia.jsx",
-      "_Logo-B5vo-ivv.js",
-      "_FlashToast-4c-bDZox.js",
-      "_HelpPopover-CHq0xr2i.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_Logo-C1S3X6kR.js",
+      "_FlashToast-Ko5PFEZo.js",
+      "_HelpPopover-BOZFF3BL.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
-  "_FlashToast-4c-bDZox.js": {
-    "file": "assets/FlashToast-4c-bDZox.js",
+  "_FlashToast-Ko5PFEZo.js": {
+    "file": "assets/FlashToast-Ko5PFEZo.js",
     "name": "FlashToast",
     "imports": [
       "entrypoints/inertia.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
-  "_HelpPopover-CHq0xr2i.js": {
-    "file": "assets/HelpPopover-CHq0xr2i.js",
+  "_HelpPopover-BOZFF3BL.js": {
+    "file": "assets/HelpPopover-BOZFF3BL.js",
     "name": "HelpPopover",
     "imports": [
       "entrypoints/inertia.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
-  "_Logo-B5vo-ivv.js": {
-    "file": "assets/Logo-B5vo-ivv.js",
+  "_Logo-C1S3X6kR.js": {
+    "file": "assets/Logo-C1S3X6kR.js",
     "name": "Logo",
     "imports": [
       "entrypoints/inertia.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
-  "_PasswordVisibilityButton-BvXoWt9A.js": {
-    "file": "assets/PasswordVisibilityButton-BvXoWt9A.js",
+  "_PasswordVisibilityButton-B-yRuHoF.js": {
+    "file": "assets/PasswordVisibilityButton-B-yRuHoF.js",
     "name": "PasswordVisibilityButton",
     "imports": [
       "entrypoints/inertia.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
-  "_classes-CAcLwa_o.js": {
-    "file": "assets/classes-CAcLwa_o.js",
+  "_classes-BQnu61XB.js": {
+    "file": "assets/classes-BQnu61XB.js",
     "name": "classes"
   },
   "_inertia-B-Mw6-Iv.svg": {
     "file": "assets/inertia-B-Mw6-Iv.svg",
     "src": "_inertia-B-Mw6-Iv.svg"
   },
-  "_jsx-runtime-BPppgE13.js": {
-    "file": "assets/jsx-runtime-BPppgE13.js",
+  "_jsx-runtime-PmhuDU0I.js": {
+    "file": "assets/jsx-runtime-PmhuDU0I.js",
     "name": "jsx-runtime",
     "imports": [
       "entrypoints/inertia.jsx"
@@ -78,7 +110,7 @@
     "src": "assets/rails.svg"
   },
   "entrypoints/application.css": {
-    "file": "assets/application-CV--kt6G.css",
+    "file": "assets/application-CwI39RPN.css",
     "name": "entrypoints\\application.css",
     "names": [
       "entrypoints/application.css"
@@ -87,7 +119,15 @@
     "isEntry": true,
     "assets": [
       "assets/bootstrap-icons-mSm7cUeB.woff2",
-      "assets/bootstrap-icons-BeopsB42.woff"
+      "assets/bootstrap-icons-BeopsB42.woff",
+      "assets/alegreya-sans-sc-latin-400-normal-E7HoNan_.woff2",
+      "assets/alegreya-sans-sc-latin-700-normal-B3GxztBF.woff2",
+      "assets/alegreya-sans-sc-latin-800-normal-BWcIw4uc.woff2",
+      "assets/alegreya-sans-sc-latin-900-normal-B5B3KT4p.woff2",
+      "assets/roboto-latin-400-normal-BqEyEoaF.woff2",
+      "assets/roboto-latin-500-normal-7RbcRiD8.woff2",
+      "assets/roboto-latin-700-normal-BZpUvMxY.woff2",
+      "assets/roboto-latin-900-normal-lk0O8k6m.woff2"
     ]
   },
   "entrypoints/application.js": {
@@ -97,7 +137,7 @@
     "isEntry": true
   },
   "entrypoints/inertia.jsx": {
-    "file": "assets/inertia-DNvD2TBa.js",
+    "file": "assets/inertia-DnLp2O64.js",
     "name": "entrypoints\\inertia.jsx",
     "src": "entrypoints/inertia.jsx",
     "isEntry": true,
@@ -107,44 +147,52 @@
       "pages/admin/users/edit.jsx",
       "pages/admin/users/index.jsx",
       "pages/admin/users/show.jsx",
-      "_Logo-B5vo-ivv.js",
-      "_PasswordVisibilityButton-BvXoWt9A.js",
+      "_Logo-C1S3X6kR.js",
+      "_PasswordVisibilityButton-B-yRuHoF.js",
       "pages/auth/login.jsx",
       "pages/auth/register.jsx",
       "pages/client/dashboard/index.jsx",
       "pages/client/profiles/show.jsx",
+      "pages/client/progress/show.jsx",
       "pages/client/routines/index.jsx",
       "pages/client/routines/show.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_FlashToast-4c-bDZox.js",
-      "_HelpPopover-CHq0xr2i.js",
+      "pages/client/workout_sessions/index.jsx",
+      "pages/client/workout_sessions/show.jsx",
+      "_DashboardShell-BpC0KnV6.js",
+      "_FlashToast-Ko5PFEZo.js",
+      "_HelpPopover-BOZFF3BL.js",
       "pages/dashboard/index.jsx",
       "pages/inertia_example/index.jsx",
       "pages/profile/ProfilePage.jsx",
       "pages/shared/LinkifiedText.jsx",
+      "pages/shared/ProgressReport.jsx",
       "pages/trainer/dashboard/index.jsx",
       "pages/trainer/profiles/show.jsx",
+      "pages/trainer/progress/index.jsx",
+      "pages/trainer/progress/show.jsx",
       "pages/trainer/routines/ExerciseForm.jsx",
       "pages/trainer/routines/RoutineForm.jsx",
       "pages/trainer/routines/edit.jsx",
       "pages/trainer/routines/index.jsx",
       "pages/trainer/routines/new.jsx",
-      "pages/trainer/routines/show.jsx"
+      "pages/trainer/routines/show.jsx",
+      "pages/trainer/workout_sessions/index.jsx",
+      "pages/trainer/workout_sessions/show.jsx"
     ]
   },
   "pages/admin/dashboard/index.jsx": {
-    "file": "assets/dashboard-DdcvFrdH.js",
+    "file": "assets/dashboard-DxKK9GUc.js",
     "name": "dashboard",
     "src": "pages/admin/dashboard/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/admin/profiles/show.jsx": {
-    "file": "assets/show-DQkInpph.js",
+    "file": "assets/show-DyIhvPQe.js",
     "name": "show",
     "src": "pages/admin/profiles/show.jsx",
     "isDynamicEntry": true,
@@ -153,78 +201,79 @@
     ]
   },
   "pages/admin/users/edit.jsx": {
-    "file": "assets/edit-BI3b6sA6.js",
+    "file": "assets/edit-BY3Aw2GJ.js",
     "name": "edit",
     "src": "pages/admin/users/edit.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/admin/users/index.jsx": {
-    "file": "assets/users-BT1iJwje.js",
+    "file": "assets/users-dujNBGmJ.js",
     "name": "users",
     "src": "pages/admin/users/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/admin/users/show.jsx": {
-    "file": "assets/show-CnaGuh1i.js",
+    "file": "assets/show-TaetVa5J.js",
     "name": "show",
     "src": "pages/admin/users/show.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/auth/login.jsx": {
-    "file": "assets/login-DTtUrIWN.js",
+    "file": "assets/login-BsLUdazx.js",
     "name": "login",
     "src": "pages/auth/login.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_Logo-B5vo-ivv.js",
-      "_PasswordVisibilityButton-BvXoWt9A.js",
-      "_classes-CAcLwa_o.js",
-      "_FlashToast-4c-bDZox.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_Logo-C1S3X6kR.js",
+      "_PasswordVisibilityButton-B-yRuHoF.js",
+      "_classes-BQnu61XB.js",
+      "_FlashToast-Ko5PFEZo.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/auth/register.jsx": {
-    "file": "assets/register-nUPjjvrm.js",
+    "file": "assets/register-ClBLRJ7g.js",
     "name": "register",
     "src": "pages/auth/register.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_Logo-B5vo-ivv.js",
-      "_PasswordVisibilityButton-BvXoWt9A.js",
-      "_classes-CAcLwa_o.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_Logo-C1S3X6kR.js",
+      "_PasswordVisibilityButton-B-yRuHoF.js",
+      "_classes-BQnu61XB.js",
+      "_FlashToast-Ko5PFEZo.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/client/dashboard/index.jsx": {
-    "file": "assets/dashboard-BhT-EusV.js",
+    "file": "assets/dashboard-D9T1Fbb8.js",
     "name": "dashboard",
     "src": "pages/client/dashboard/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/client/profiles/show.jsx": {
-    "file": "assets/show-K_2p2zKq.js",
+    "file": "assets/show-Duhmp7hI.js",
     "name": "show",
     "src": "pages/client/profiles/show.jsx",
     "isDynamicEntry": true,
@@ -232,49 +281,83 @@
       "pages/profile/ProfilePage.jsx"
     ]
   },
+  "pages/client/progress/show.jsx": {
+    "file": "assets/show-FmbOFxFK.js",
+    "name": "show",
+    "src": "pages/client/progress/show.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_DashboardShell-BpC0KnV6.js",
+      "pages/shared/ProgressReport.jsx",
+      "_jsx-runtime-PmhuDU0I.js"
+    ]
+  },
   "pages/client/routines/index.jsx": {
-    "file": "assets/routines-DkgYRMs1.js",
+    "file": "assets/routines-DWzsVi5M.js",
     "name": "routines",
     "src": "pages/client/routines/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/client/routines/show.jsx": {
-    "file": "assets/show-CKX98EOu.js",
+    "file": "assets/show-Bl91l8P6.js",
     "name": "show",
     "src": "pages/client/routines/show.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
+      "_DashboardShell-BpC0KnV6.js",
       "pages/shared/LinkifiedText.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
+    ]
+  },
+  "pages/client/workout_sessions/index.jsx": {
+    "file": "assets/workout_sessions-DI75xBd2.js",
+    "name": "workout_sessions",
+    "src": "pages/client/workout_sessions/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
+    ]
+  },
+  "pages/client/workout_sessions/show.jsx": {
+    "file": "assets/show-CL4cwD48.js",
+    "name": "show",
+    "src": "pages/client/workout_sessions/show.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/dashboard/index.jsx": {
-    "file": "assets/dashboard-B5KClQYT.js",
+    "file": "assets/dashboard-DTpUTc-i.js",
     "name": "dashboard",
     "src": "pages/dashboard/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_Logo-B5vo-ivv.js",
-      "_classes-CAcLwa_o.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_Logo-C1S3X6kR.js",
+      "_classes-BQnu61XB.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/inertia_example/index.jsx": {
-    "file": "assets/inertia_example-BmgGD2QI.js",
+    "file": "assets/inertia_example-BiNDcZvK.js",
     "name": "inertia_example",
     "src": "pages/inertia_example/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
     ],
     "css": [
       "assets/inertia_example-DfVQzGtb.css"
@@ -284,39 +367,49 @@
     ]
   },
   "pages/profile/ProfilePage.jsx": {
-    "file": "assets/ProfilePage-C4W4Rhth.js",
+    "file": "assets/ProfilePage-CXuwMpBE.js",
     "name": "ProfilePage",
     "src": "pages/profile/ProfilePage.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_PasswordVisibilityButton-BvXoWt9A.js",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_PasswordVisibilityButton-B-yRuHoF.js",
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/shared/LinkifiedText.jsx": {
-    "file": "assets/LinkifiedText-CqlD9a7j.js",
+    "file": "assets/LinkifiedText-E3aswK_V.js",
     "name": "LinkifiedText",
     "src": "pages/shared/LinkifiedText.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
+    ]
+  },
+  "pages/shared/ProgressReport.jsx": {
+    "file": "assets/ProgressReport--4jEctld.js",
+    "name": "ProgressReport",
+    "src": "pages/shared/ProgressReport.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/trainer/dashboard/index.jsx": {
-    "file": "assets/dashboard-BcqL6vuz.js",
+    "file": "assets/dashboard-C7-66Dov.js",
     "name": "dashboard",
     "src": "pages/trainer/dashboard/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/trainer/profiles/show.jsx": {
-    "file": "assets/show-DMTFiK9X.js",
+    "file": "assets/show-CC0mz0LX.js",
     "name": "show",
     "src": "pages/trainer/profiles/show.jsx",
     "isDynamicEntry": true,
@@ -324,73 +417,118 @@
       "pages/profile/ProfilePage.jsx"
     ]
   },
+  "pages/trainer/progress/index.jsx": {
+    "file": "assets/progress-WBl7IF0c.js",
+    "name": "progress",
+    "src": "pages/trainer/progress/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
+    ]
+  },
+  "pages/trainer/progress/show.jsx": {
+    "file": "assets/show-CkHe0zIH.js",
+    "name": "show",
+    "src": "pages/trainer/progress/show.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_DashboardShell-BpC0KnV6.js",
+      "pages/shared/ProgressReport.jsx",
+      "_jsx-runtime-PmhuDU0I.js"
+    ]
+  },
   "pages/trainer/routines/ExerciseForm.jsx": {
-    "file": "assets/ExerciseForm-B94fXxpq.js",
+    "file": "assets/ExerciseForm-BRdAaR8i.js",
     "name": "ExerciseForm",
     "src": "pages/trainer/routines/ExerciseForm.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/trainer/routines/RoutineForm.jsx": {
-    "file": "assets/RoutineForm-D3nodpdW.js",
+    "file": "assets/RoutineForm-JDZTr9kK.js",
     "name": "RoutineForm",
     "src": "pages/trainer/routines/RoutineForm.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/trainer/routines/edit.jsx": {
-    "file": "assets/edit-caA2b-aZ.js",
+    "file": "assets/edit-AXuxhtmo.js",
     "name": "edit",
     "src": "pages/trainer/routines/edit.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
+      "_DashboardShell-BpC0KnV6.js",
       "pages/trainer/routines/RoutineForm.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/trainer/routines/index.jsx": {
-    "file": "assets/routines-CovhLzM3.js",
+    "file": "assets/routines-9FG7R_H5.js",
     "name": "routines",
     "src": "pages/trainer/routines/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
-      "_jsx-runtime-BPppgE13.js"
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/trainer/routines/new.jsx": {
-    "file": "assets/new-DS6V5UIz.js",
+    "file": "assets/new-DcTsgipt.js",
     "name": "new",
     "src": "pages/trainer/routines/new.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
+      "_DashboardShell-BpC0KnV6.js",
       "pages/trainer/routines/RoutineForm.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   },
   "pages/trainer/routines/show.jsx": {
-    "file": "assets/show-yxJsTnHG.js",
+    "file": "assets/show-UiRTTk5w.js",
     "name": "show",
     "src": "pages/trainer/routines/show.jsx",
     "isDynamicEntry": true,
     "imports": [
       "entrypoints/inertia.jsx",
-      "_DashboardShell-Ck3TnMJn.js",
+      "_DashboardShell-BpC0KnV6.js",
       "pages/trainer/routines/ExerciseForm.jsx",
-      "_jsx-runtime-BPppgE13.js"
+      "_jsx-runtime-PmhuDU0I.js"
+    ]
+  },
+  "pages/trainer/workout_sessions/index.jsx": {
+    "file": "assets/workout_sessions-B51OK-AY.js",
+    "name": "workout_sessions",
+    "src": "pages/trainer/workout_sessions/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
+    ]
+  },
+  "pages/trainer/workout_sessions/show.jsx": {
+    "file": "assets/show-CdgQOpK42.js",
+    "name": "show",
+    "src": "pages/trainer/workout_sessions/show.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "entrypoints/inertia.jsx",
+      "_DashboardShell-BpC0KnV6.js",
+      "_jsx-runtime-PmhuDU0I.js"
     ]
   }
 }

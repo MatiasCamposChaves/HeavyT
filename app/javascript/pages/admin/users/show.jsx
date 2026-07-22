@@ -7,7 +7,7 @@ export default function AdminUserShow({ managed_user: managedUser, user }) {
 
   return <DashboardShell user={user}>
     <Head title={managedUser.full_name} />
-    <Link className="mb-3 inline-block text-sm font-bold text-[#e5253b]" href="/admin/users">← Usuarios</Link>
+    <Link className="mb-3 inline-flex items-center gap-2 text-sm font-bold text-[#e5253b] no-underline hover:text-[#ff6678]" href="/admin/users"><i aria-hidden="true" className="bi bi-arrow-left" />Usuarios</Link>
     <div className="mb-5 flex items-start justify-between gap-3"><h1 className="m-0 break-words text-xl font-extrabold uppercase">{managedUser.full_name}</h1><span className={`rounded-full px-2 py-1 text-[10px] font-extrabold uppercase ${blocked ? "bg-[#e5253b]/20 text-[#ff8391]" : "bg-emerald-500/15 text-emerald-300"}`}>{blocked ? "Bloqueado" : "Activo"}</span></div>
     <section className={`${card} mb-4`}>
       <dl className="m-0 grid gap-3 text-sm">
