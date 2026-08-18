@@ -39,6 +39,37 @@ class RoutinesFlowTest < ActionDispatch::IntegrationTest
     assert_difference("Exercise.count", -1) { delete trainer_routine_exercise_path(routine, exercise) }
   end
 
+  test "trainer adds an exercise from the exercise bank" do
+    routine = @trainer.trainer_profile.routines.create!(name: "Banco")
+    template = @trainer.trainer_profile.exercise_templates.create!(
+      name: "Press banca",
+      muscle_group: "Pecho",
+      notes: "Controlar tecnica",
+    )
+    sign_in(@trainer)
+
+    assert_difference("Exercise.count", 1) do
+      post trainer_routine_exercises_path(routine), params: {
+        exercise: {
+          exercise_template_id: template.id,
+          name: template.name,
+          sets: 4,
+          repetitions: 8,
+          rest_seconds: 90,
+          suggested_weight_lb: 135,
+          notes: template.notes,
+        },
+      }
+    end
+
+    exercise = routine.exercises.last
+    assert_equal "Press banca", exercise.name
+    assert_equal 4, exercise.sets
+    assert_equal 8, exercise.repetitions
+    assert_equal 90, exercise.rest_seconds
+    assert_equal 135, exercise.suggested_weight_lb
+  end
+
   test "trainer reorders exercises and positions stay consecutive" do
     routine = @trainer.trainer_profile.routines.create!(name: "Ordenada")
     first = routine.exercises.create!(name: "Primero", sets: 3, repetitions: 10, position: 1)

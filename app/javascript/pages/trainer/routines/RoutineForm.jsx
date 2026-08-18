@@ -1,10 +1,11 @@
 import { Link, useForm } from "@inertiajs/react"
 
+import CustomSelect from "../../dashboard/CustomSelect"
 import { primaryButton } from "../../dashboard/DashboardShell"
 
 const fieldClass = "grid gap-2"
 const labelClass = "text-xs font-bold uppercase text-[#aeb2ba]"
-const inputClass = "w-full rounded-lg border border-[#3b4049] bg-[#171a20] px-3 py-2.5 text-white outline-none focus:border-[#e5253b] focus:ring-2 focus:ring-[#e5253b]/20"
+const inputClass = "w-full rounded-lg border border-[#3b4049] bg-[#171a20] px-3 py-2.5 text-white accent-[#e5253b] outline-none focus:border-[#e5253b] focus:ring-2 focus:ring-[#e5253b]/25"
 
 function errorText(value) {
   return Array.isArray(value) ? value.join(", ") : value
@@ -47,13 +48,14 @@ export default function RoutineForm({ routine }) {
         <textarea className={`${inputClass} min-h-24 resize-y`} value={data.routine.description} onChange={(event) => update("description", event.target.value)} />
       </label>
       {editing && (
-        <label className={fieldClass}>
-          <span className={labelClass}>Estado</span>
-          <select className={inputClass} value={data.routine.status} onChange={(event) => update("status", event.target.value)}>
-            <option value="draft">Borrador</option>
-            <option value="active">Activa</option>
-          </select>
-        </label>
+        <CustomSelect
+          buttonClassName={inputClass}
+          label="Estado"
+          labelClassName={`${fieldClass} ${labelClass}`}
+          options={[{ label: "Borrador", value: "draft" }, { label: "Activa", value: "active" }]}
+          value={data.routine.status}
+          onChange={(value) => update("status", value)}
+        />
       )}
       <button className={`${primaryButton} w-full border-0`} disabled={processing} type="submit">
         {processing ? "Guardando..." : editing ? "Guardar cambios" : "Crear rutina"}

@@ -2,7 +2,7 @@ import { Head, Link, useForm } from "@inertiajs/react"
 
 import DashboardShell, { card, primaryButton } from "../../dashboard/DashboardShell"
 
-const inputClass = "h-11 w-full rounded-lg border border-[#3b4049] bg-[#171a20] px-3 text-white outline-none focus:border-[#e5253b]"
+const inputClass = "h-11 w-full rounded-lg border border-[#3b4049] bg-[#171a20] px-3 text-white accent-[#e5253b] outline-none focus:border-[#e5253b] focus:ring-2 focus:ring-[#e5253b]/25"
 
 export default function AdminUserEdit({ managed_user: managedUser, user }) {
   const { data, errors, patch, processing, setData } = useForm({ user: { full_name: managedUser.full_name, phone: managedUser.phone } })

@@ -1,0 +1,11 @@
+<h1>Restablece tu contraseña</h1>
+
+<p>Hola <%= @user.full_name %>,</p>
+
+<p>Recibimos una solicitud para cambiar la contraseña de tu cuenta de HeavyT.</p>
+
+<p>
+  <%= link_to "Cambiar mi contraseña", @reset_url %>
+</p>
+
+<p>Este enlace vence en 30 minutos. Si no pediste este cambio, puedes ignorar este correo.</p>

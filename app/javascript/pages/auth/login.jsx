@@ -95,8 +95,8 @@ export default function Login() {
           </form>
 
           <div className={links}>
-            <a className={textLink} href="mailto:soporte@heavyt.local">Olvidé mi contraseña</a>
-            <Link className={textLink} href="/register">No tienes cuenta? Registrate</Link>
+            <Link className={textLink} href="/password/forgot">Olvidé mi contraseña</Link>
+            <Link className={textLink} href="/register">¿No tienes cuenta? Regístrate</Link>
           </div>
         </div>
       </section>

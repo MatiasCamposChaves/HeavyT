@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy", as: :logout
   get "register", to: "auth#register", as: :register
   post "register", to: "registrations#create"
+  get "password/forgot", to: "password_resets#new", as: :new_password_reset
+  post "password/forgot", to: "password_resets#create", as: :password_resets
+  get "password/reset/:token", to: "password_resets#edit", as: :edit_password_reset
+  patch "password/reset/:token", to: "password_resets#update", as: :password_reset
   get "dashboard", to: "dashboard#index", as: :dashboard
 
   namespace :client do
@@ -36,6 +40,8 @@ Rails.application.routes.draw do
   namespace :trainer do
     get "dashboard", to: "dashboard#index"
     post "invite", to: "invites#create", as: :invite
+    get "exercise-bank", to: "exercise_templates#index", as: :exercise_bank
+    resources :exercise_templates, only: [:create, :update, :destroy]
     resources :routines do
         resources :exercises, only: [:create, :update, :destroy] do
           member { patch :move }

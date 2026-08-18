@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_060000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_17_001000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -37,6 +37,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_060000) do
     t.index ["exercise_id"], name: "index_exercise_results_on_exercise_id"
     t.index ["workout_session_id", "exercise_id"], name: "index_exercise_results_on_workout_session_id_and_exercise_id", unique: true
     t.index ["workout_session_id"], name: "index_exercise_results_on_workout_session_id"
+  end
+
+  create_table "exercise_templates", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "equipment"
+    t.string "muscle_group", null: false
+    t.string "name", null: false
+    t.text "notes"
+    t.bigint "trainer_profile_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trainer_profile_id", "name"], name: "index_exercise_templates_on_trainer_profile_id_and_name"
+    t.index ["trainer_profile_id"], name: "index_exercise_templates_on_trainer_profile_id"
   end
 
   create_table "exercises", force: :cascade do |t|
@@ -133,6 +145,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_060000) do
   add_foreign_key "client_profiles", "users"
   add_foreign_key "exercise_results", "exercises"
   add_foreign_key "exercise_results", "workout_sessions"
+  add_foreign_key "exercise_templates", "trainer_profiles"
   add_foreign_key "exercises", "routines"
   add_foreign_key "routine_assignments", "client_profiles"
   add_foreign_key "routine_assignments", "routines"

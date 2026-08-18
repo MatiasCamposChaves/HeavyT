@@ -6,8 +6,11 @@ class TrainerNotificationsTest < ActionDispatch::IntegrationTest
     @client = create_user("client")
     @client.client_profile.update!(trainer_profile: @trainer.trainer_profile, linked_at: Time.current)
     @routine = @trainer.trainer_profile.routines.create!(name: "Pierna", status: "active")
-    @assignment = @routine.routine_assignments.create!(client_profile: @client.client_profile,
-      assigned_at: Time.current, expires_on: Date.current.tomorrow)
+    @assignment = @routine.routine_assignments.create!(
+      client_profile: @client.client_profile,
+      assigned_at: Time.current,
+      expires_on: Date.current.tomorrow,
+    )
     post login_path, params: { session: { email: @trainer.email, password: "password123" } }
   end
 
@@ -15,8 +18,11 @@ class TrainerNotificationsTest < ActionDispatch::IntegrationTest
     get trainer_notifications_path
 
     assert_response :success
-    assert_includes response.body, "La rutina está por vencer"
-    assert_includes response.body, "Pierna"
+    notifications = inertia_props.fetch("notifications")
+    assert_equal 1, notifications.size
+    assert_equal "expiring", notifications.first.fetch("type")
+    assert_equal "Pierna", notifications.first.fetch("routine_name")
+    assert_equal @client.full_name, notifications.first.fetch("client_name")
   end
 
   test "trainer extends or archives an assignment" do
@@ -30,7 +36,16 @@ class TrainerNotificationsTest < ActionDispatch::IntegrationTest
   private
 
   def create_user(role)
-    User.create!(full_name: "Test #{role}", email: "#{role}-#{SecureRandom.hex(5)}@example.com",
-      phone: "+502 5555 5555", password: "password123", role: role)
+    User.create!(
+      full_name: "Test #{role}",
+      email: "#{role}-#{SecureRandom.hex(5)}@example.com",
+      phone: "+502 5555 5555",
+      password: "password123",
+      role: role,
+    )
+  end
+
+  def inertia_props
+    JSON.parse(response.body.match(%r{<script data-page="app" type="application/json">(.*?)</script>}m)[1]).fetch("props")
   end
 end

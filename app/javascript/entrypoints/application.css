@@ -36,6 +36,23 @@ textarea {
   font-family: inherit;
 }
 
+select,
+input,
+textarea {
+  accent-color: #e5253b;
+  color-scheme: dark;
+}
+
+select option {
+  background-color: #171a20;
+  color: #f6f7fb;
+}
+
+select option:checked {
+  background-color: #e5253b;
+  color: #ffffff;
+}
+
 h1,
 h2,
 h3,

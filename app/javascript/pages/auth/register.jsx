@@ -4,6 +4,7 @@ import { useState } from "react"
 import Logo from "./Logo"
 import PasswordVisibilityButton from "./PasswordVisibilityButton"
 import FlashToast from "../dashboard/FlashToast"
+import CustomSelect from "../dashboard/CustomSelect"
 import {
   authPage,
   authPanel,
@@ -61,24 +62,23 @@ export default function Register() {
           <h1 className={title}>Registrarse</h1>
 
           <form className={form} noValidate onSubmit={submit}>
-            <label className={field}>
-              <span className={label}>Tipo de cuenta</span>
-              <select
-                className={input}
+            <div className={field}>
+              <CustomSelect
+                buttonClassName={input}
+                label="Tipo de cuenta"
+                labelClassName={`${field} ${label}`}
+                options={[{ label: "Cliente", value: "client" }, { label: "Entrenador personal", value: "trainer" }]}
                 value={data.user.role}
-                onChange={(event) => updateUser("role", event.target.value)}
-              >
-                <option value="client">Cliente</option>
-                <option value="trainer">Entrenador personal</option>
-              </select>
+                onChange={(value) => updateUser("role", value)}
+              />
               {errors.role && <p className={error}>{errorText(errors.role)}</p>}
-            </label>
+            </div>
 
             <label className={field}>
               <span className={label}>Nombre completo</span>
               <input
-                className={input}
                 autoComplete="name"
+                className={input}
                 value={data.user.full_name}
                 onChange={(event) => updateUser("full_name", event.target.value)}
               />
@@ -86,11 +86,11 @@ export default function Register() {
             </label>
 
             <label className={field}>
-              <span className={label}>Correo electronico</span>
+              <span className={label}>Correo electrónico</span>
               <input
+                autoComplete="email"
                 className={input}
                 type="email"
-                autoComplete="email"
                 value={data.user.email}
                 onChange={(event) => updateUser("email", event.target.value)}
               />
@@ -98,10 +98,10 @@ export default function Register() {
             </label>
 
             <label className={field}>
-              <span className={label}>Telefono</span>
+              <span className={label}>Teléfono</span>
               <input
-                className={input}
                 autoComplete="tel"
+                className={input}
                 value={data.user.phone}
                 onChange={(event) => updateUser("phone", event.target.value)}
               />
@@ -109,12 +109,12 @@ export default function Register() {
             </label>
 
             <label className={field}>
-              <span className={label}>Contrasena</span>
+              <span className={label}>Contraseña</span>
               <div className="relative">
                 <input
+                  autoComplete="new-password"
                   className={`${input} pr-12`}
                   type={showPassword ? "text" : "password"}
-                  autoComplete="new-password"
                   value={data.user.password}
                   onChange={(event) => updateUser("password", event.target.value)}
                 />
@@ -127,9 +127,9 @@ export default function Register() {
               <span className={label}>Confirmar contraseña</span>
               <div className="relative">
                 <input
+                  autoComplete="new-password"
                   className={`${input} pr-12`}
                   type={showConfirmation ? "text" : "password"}
-                  autoComplete="new-password"
                   value={data.user.password_confirmation}
                   onChange={(event) => updateUser("password_confirmation", event.target.value)}
                 />
@@ -138,7 +138,9 @@ export default function Register() {
               {errors.password_confirmation && <p className={error}>{errorText(errors.password_confirmation)}</p>}
             </label>
 
-            <p className="m-0 text-xs leading-5 text-[#aeb2ba]">La contraseña debe contener al menos 8 caracteres y ambas contraseñas deben coincidir.</p>
+            <p className="m-0 text-xs leading-5 text-[#aeb2ba]">
+              La contraseña debe tener al menos 8 caracteres y coincidir con la confirmación.
+            </p>
 
             <button className={`${selectionButton} mt-2.5`} type="submit" disabled={processing}>
               {processing ? "Creando cuenta..." : "Registrarse"}
@@ -146,7 +148,7 @@ export default function Register() {
           </form>
 
           <div className={links}>
-            <Link className={textLink} href="/login">Ya tienes cuenta? Iniciar sesion</Link>
+            <Link className={textLink} href="/login">¿Ya tienes cuenta? Iniciar sesión</Link>
           </div>
         </div>
       </section>

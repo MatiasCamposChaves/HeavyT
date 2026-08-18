@@ -7,17 +7,17 @@ import ExerciseForm, { dayOptions } from "./ExerciseForm"
 function ExerciseRow({ exercise, exercises, index, routineId }) {
   return <div className="flex items-start gap-2 rounded-lg bg-[#171a20] p-3">
     <details className="min-w-0 flex-1">
-      <summary className="cursor-pointer font-extrabold">{exercise.position}. {exercise.name} — {exercise.sets}×{exercise.repetitions}</summary>
+      <summary className="cursor-pointer font-extrabold">{exercise.position}. {exercise.name} - {exercise.sets}x{exercise.repetitions}</summary>
       <div className="mt-4"><ExerciseForm exercise={exercise} routineId={routineId} /></div>
     </details>
     <div className="flex shrink-0 gap-1">
-      {index > 0 ? <Link aria-label={`Mover ${exercise.name} hacia arriba`} as="button" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-white transition hover:border-[#e5253b] hover:bg-[#c91f33]" href={`/trainer/routines/${routineId}/exercises/${exercise.id}/move?direction=up`} method="patch" preserveScroll><i className="bi bi-arrow-up" /></Link> : <button aria-label="Ya es el primer ejercicio del día" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-[#60656e]" disabled type="button"><i className="bi bi-arrow-up" /></button>}
-      {index < exercises.length - 1 ? <Link aria-label={`Mover ${exercise.name} hacia abajo`} as="button" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-white transition hover:border-[#e5253b] hover:bg-[#c91f33]" href={`/trainer/routines/${routineId}/exercises/${exercise.id}/move?direction=down`} method="patch" preserveScroll><i className="bi bi-arrow-down" /></Link> : <button aria-label="Ya es el último ejercicio del día" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-[#60656e]" disabled type="button"><i className="bi bi-arrow-down" /></button>}
+      {index > 0 ? <Link aria-label={`Mover ${exercise.name} hacia arriba`} as="button" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-white transition hover:border-[#e5253b] hover:bg-[#c91f33]" href={`/trainer/routines/${routineId}/exercises/${exercise.id}/move?direction=up`} method="patch" preserveScroll><i className="bi bi-arrow-up" /></Link> : <button aria-label="Ya es el primer ejercicio del dia" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-[#60656e]" disabled type="button"><i className="bi bi-arrow-up" /></button>}
+      {index < exercises.length - 1 ? <Link aria-label={`Mover ${exercise.name} hacia abajo`} as="button" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-white transition hover:border-[#e5253b] hover:bg-[#c91f33]" href={`/trainer/routines/${routineId}/exercises/${exercise.id}/move?direction=down`} method="patch" preserveScroll><i className="bi bi-arrow-down" /></Link> : <button aria-label="Ya es el ultimo ejercicio del dia" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-[#60656e]" disabled type="button"><i className="bi bi-arrow-down" /></button>}
     </div>
   </div>
 }
 
-export default function RoutineShow({ clients, routine, user }) {
+export default function RoutineShow({ clients, exercise_templates = [], routine, user }) {
   const [selectedDay, setSelectedDay] = useState(1)
   const initiallySelected = clients.filter((client) => client.assigned).map((client) => String(client.client_profile_id))
   const { data, errors, post, processing, setData } = useForm({
@@ -53,11 +53,14 @@ export default function RoutineShow({ clients, routine, user }) {
       {routine.description && <p className="mb-4 text-sm leading-6 text-[#c8cbd2]">{routine.description}</p>}
       <div className="grid gap-4">
         <section className={card}>
-          <h2 className="mb-3 font-extrabold uppercase">Agregar ejercicio por día</h2>
+          <div className="mb-3 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <h2 className="m-0 font-extrabold uppercase">Agregar ejercicio por dia</h2>
+            <Link className="text-sm font-bold text-[#e5253b]" href="/trainer/exercise-bank">Administrar banco</Link>
+          </div>
           <div className="mb-4 flex flex-wrap gap-2">
             {dayOptions.map((day) => <button className={`rounded-lg px-3 py-2 text-xs font-extrabold transition ${selectedDay === day.value ? "bg-[#e5253b] text-white" : "bg-[#171a20] text-[#c8cbd2] hover:bg-[#343840] hover:text-white"}`} key={day.value} onClick={() => setSelectedDay(day.value)} type="button">{day.label}</button>)}
           </div>
-          <ExerciseForm defaultDay={selectedDay} key={`new-${selectedDay}`} routineId={routine.id} />
+          <ExerciseForm defaultDay={selectedDay} exerciseTemplates={exercise_templates} key={`new-${selectedDay}`} routineId={routine.id} />
         </section>
 
         <section className={card}>
@@ -76,7 +79,7 @@ export default function RoutineShow({ clients, routine, user }) {
 
         <section className={card}>
           <h2 className="mb-2 font-extrabold uppercase">Asignar clientes</h2>
-          <p className="mb-3 text-[#c8cbd2]">Al asignarla, la rutina cambiará automáticamente a activa.</p>
+          <p className="mb-3 text-[#c8cbd2]">Al asignarla, la rutina cambiara automaticamente a activa.</p>
           <form className="grid gap-3" noValidate onSubmit={assign}>
             <div className="grid gap-3 sm:max-w-sm">
               <label className="grid gap-2 text-xs font-bold uppercase text-[#aeb2ba]">
@@ -87,7 +90,7 @@ export default function RoutineShow({ clients, routine, user }) {
             {clients.length === 0 ? <p className="m-0 text-[#c8cbd2]">Primero vincula al menos un cliente.</p> : clients.map((client) => (
               <label className="flex items-center gap-3 rounded-lg bg-[#171a20] p-3" key={client.client_profile_id}>
                 <input checked={data.assignment.client_profile_ids.includes(String(client.client_profile_id))} type="checkbox" onChange={() => toggleClient(client.client_profile_id)} />
-                <span><strong className="block">{client.full_name}</strong><small className="text-[#aeb2ba]">{client.email}{client.assigned ? ` · Ya asignada${client.expires_on ? ` · vence ${client.expires_on}` : ""}` : ""}</small></span>
+                <span><strong className="block">{client.full_name}</strong><small className="text-[#aeb2ba]">{client.email}{client.assigned ? ` - Ya asignada${client.expires_on ? ` - vence ${client.expires_on}` : ""}` : ""}</small></span>
               </label>
             ))}
             {errors.clients && <p className="m-0 text-xs font-bold text-[#ff8391]">{Array.isArray(errors.clients) ? errors.clients.join(", ") : errors.clients}</p>}

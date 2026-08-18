@@ -8,6 +8,7 @@ class TrainerProfile < ApplicationRecord
   has_many :clients, through: :client_profiles, source: :user
   has_many :trainer_invites, dependent: :destroy
   has_many :routines, dependent: :destroy
+  has_many :exercise_templates, dependent: :destroy
 
   validate :user_must_be_trainer
 

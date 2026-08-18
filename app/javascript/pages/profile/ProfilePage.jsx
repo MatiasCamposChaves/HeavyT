@@ -1,10 +1,10 @@
-import { Head, Link, useForm } from "@inertiajs/react"
+import { Head, useForm } from "@inertiajs/react"
 import { useState } from "react"
 
 import PasswordVisibilityButton from "../auth/PasswordVisibilityButton"
 import DashboardShell, { card, primaryButton } from "../dashboard/DashboardShell"
 
-const inputClass = "h-11 w-full rounded-lg border border-[#3b4049] bg-[#171a20] px-3 text-white outline-none focus:border-[#e5253b] focus:ring-2 focus:ring-[#e5253b]/20"
+const inputClass = "h-11 w-full rounded-lg border border-[#3b4049] bg-[#171a20] px-3 text-white accent-[#e5253b] outline-none focus:border-[#e5253b] focus:ring-2 focus:ring-[#e5253b]/25"
 
 function errorText(value) {
   return Array.isArray(value) ? value.join(", ") : value
@@ -54,25 +54,46 @@ export default function ProfilePage({ user }) {
         </section>
 
         <section className={`${card} grid gap-4`}>
-          <div><h2 className="m-0 font-extrabold uppercase">Cambiar contraseña</h2><p className="mb-0 mt-1 text-xs text-[#aeb2ba]">Déjala vacía para conservar la contraseña actual.</p></div>
+          <div>
+            <h2 className="m-0 font-extrabold uppercase">Cambiar contraseña</h2>
+            <p className="mb-0 mt-1 text-xs text-[#aeb2ba]">Déjala vacía para conservar la contraseña actual.</p>
+          </div>
           <label className="grid gap-2 text-xs font-bold uppercase text-[#aeb2ba]">
             Nueva contraseña
-            <div className="relative"><input className={`${inputClass} pr-12`} autoComplete="new-password" minLength="8" type={showPassword ? "text" : "password"} value={data.user.password} onChange={(event) => update("password", event.target.value)} /><PasswordVisibilityButton visible={showPassword} onToggle={() => setShowPassword((value) => !value)} /></div>
+            <div className="relative">
+              <input
+                autoComplete="new-password"
+                className={`${inputClass} pr-12`}
+                minLength="8"
+                type={showPassword ? "text" : "password"}
+                value={data.user.password}
+                onChange={(event) => update("password", event.target.value)}
+              />
+              <PasswordVisibilityButton visible={showPassword} onToggle={() => setShowPassword((value) => !value)} />
+            </div>
             {errors.password && <span className="text-[#ff8391]">{errorText(errors.password)}</span>}
           </label>
           <label className="grid gap-2 text-xs font-bold uppercase text-[#aeb2ba]">
             Confirmar contraseña
-            <div className="relative"><input className={`${inputClass} pr-12`} autoComplete="new-password" minLength="8" type={showConfirmation ? "text" : "password"} value={data.user.password_confirmation} onChange={(event) => update("password_confirmation", event.target.value)} /><PasswordVisibilityButton visible={showConfirmation} onToggle={() => setShowConfirmation((value) => !value)} /></div>
+            <div className="relative">
+              <input
+                autoComplete="new-password"
+                className={`${inputClass} pr-12`}
+                minLength="8"
+                type={showConfirmation ? "text" : "password"}
+                value={data.user.password_confirmation}
+                onChange={(event) => update("password_confirmation", event.target.value)}
+              />
+              <PasswordVisibilityButton visible={showConfirmation} onToggle={() => setShowConfirmation((value) => !value)} />
+            </div>
             {errors.password_confirmation && <span className="text-[#ff8391]">{errorText(errors.password_confirmation)}</span>}
           </label>
         </section>
 
-        <button className={`${primaryButton} w-full border-0`} disabled={processing} type="submit">{processing ? "Guardando..." : "Guardar perfil"}</button>
+        <button className={`${primaryButton} w-full border-0`} disabled={processing} type="submit">
+          {processing ? "Guardando..." : "Guardar perfil"}
+        </button>
       </form>
-
-      <Link className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-[#e5253b] bg-transparent text-sm font-extrabold text-white no-underline transition-colors hover:bg-[#c91f33]" href="/logout" method="delete" as="button">
-        <i aria-hidden="true" className="bi bi-box-arrow-right" /> Cerrar sesión
-      </Link>
     </DashboardShell>
   )
 }

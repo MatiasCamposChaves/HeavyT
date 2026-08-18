@@ -30,10 +30,17 @@ module Trainer
     def show
       clients = @profile.client_profiles.joins(:user).includes(:user).order("users.full_name")
       assignments = @routine.routine_assignments.index_by(&:client_profile_id)
+      exercise_templates = @profile.exercise_templates.order(:name)
 
       render inertia: {
         user: user_json,
         routine: routine_detail(@routine),
+        exercise_templates: exercise_templates.as_json(
+          only: [
+            :id, :name, :default_sets, :default_repetitions, :default_rest_seconds,
+            :default_weight_lb, :notes,
+          ],
+        ),
         clients: clients.map do |client|
           client.user.as_json(only: [:id, :full_name, :email]).merge(
             client_profile_id: client.id,

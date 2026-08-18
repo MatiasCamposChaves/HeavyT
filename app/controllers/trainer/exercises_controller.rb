@@ -62,9 +62,9 @@ module Trainer
     end
 
     def exercise_params
-      params.require(:exercise).permit(
-        :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :day_of_week,
-      )
+      params.require(:exercise)
+        .permit(:exercise_template_id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :day_of_week)
+        .except(:exercise_template_id)
     end
 
     def normalize_positions!(day)
