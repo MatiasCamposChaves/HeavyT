@@ -4,7 +4,7 @@ module Trainer
   class ExercisesController < InertiaController
     before_action -> { authorize_role!(:trainer) }
     before_action :set_routine
-    before_action :set_exercise, only: [:update, :destroy, :move]
+    before_action :set_exercise, only: [ :update, :destroy, :move ]
 
     def create
       exercise = @routine.exercises.new(exercise_params)

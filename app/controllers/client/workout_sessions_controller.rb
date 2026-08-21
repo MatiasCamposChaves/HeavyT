@@ -4,7 +4,7 @@ module Client
   class WorkoutSessionsController < InertiaController
     before_action -> { authorize_role!(:client) }
     before_action :set_profile
-    before_action :set_workout, only: [:show, :complete]
+    before_action :set_workout, only: [ :show, :complete ]
 
     def index
       workouts = @profile.workout_sessions.includes(routine_assignment: :routine).order(started_at: :desc)
@@ -31,7 +31,7 @@ module Client
     def show
       render inertia: {
         user: user_json,
-        workout: workout_detail(@workout),
+        workout: workout_detail(@workout)
       }
     end
 
@@ -55,11 +55,11 @@ module Client
     end
 
     def user_json
-      current_user.as_json(only: [:full_name, :email, :phone, :role])
+      current_user.as_json(only: [ :full_name, :email, :phone, :role ])
     end
 
     def workout_summary(workout)
-      workout.as_json(only: [:id, :status, :started_at, :completed_at]).merge(
+      workout.as_json(only: [ :id, :status, :started_at, :completed_at ]).merge(
         routine_name: workout.routine_assignment.routine.name,
         day_name: workout.day_name,
       )
@@ -69,8 +69,8 @@ module Client
       workout_summary(workout).merge(
         trainer_name: workout.routine_assignment.routine.trainer_profile.user.full_name,
         results: workout.exercise_results.sort_by { |result| result.exercise.position }.map do |result|
-          result.as_json(only: [:id, :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes]).merge(
-            exercise: result.exercise.as_json(only: [:id, :name, :sets, :repetitions, :suggested_weight_lb, :position]),
+          result.as_json(only: [ :id, :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes ]).merge(
+            exercise: result.exercise.as_json(only: [ :id, :name, :sets, :repetitions, :suggested_weight_lb, :position ]),
           )
         end,
       )

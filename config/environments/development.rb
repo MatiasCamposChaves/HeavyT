@@ -41,7 +41,7 @@ Rails.application.configure do
       user_name: ENV.fetch("GMAIL_SMTP_USER"),
       password: ENV.fetch("GMAIL_SMTP_APP_PASSWORD"),
       authentication: "plain",
-      enable_starttls_auto: true,
+      enable_starttls_auto: true
     }
   else
     # Store local emails as files so password reset links are easy to test.

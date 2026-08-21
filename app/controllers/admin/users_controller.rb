@@ -16,9 +16,9 @@ module Admin
       end
 
       render inertia: {
-        user: current_user.as_json(only: [:full_name, :email, :phone, :role]),
+        user: current_user.as_json(only: [ :full_name, :email, :phone, :role ]),
         users: users.limit(100).map { |item| user_summary(item) },
-        filters: { q: params[:q].to_s, role: params[:role].to_s, status: params[:status].to_s },
+        filters: { q: params[:q].to_s, role: params[:role].to_s, status: params[:status].to_s }
       }
     end
 
@@ -59,11 +59,11 @@ module Admin
     end
 
     def current_user_json
-      current_user.as_json(only: [:full_name, :email, :phone, :role])
+      current_user.as_json(only: [ :full_name, :email, :phone, :role ])
     end
 
     def user_summary(item)
-      item.as_json(only: [:id, :full_name, :email, :phone, :role, :blocked_at]).merge(
+      item.as_json(only: [ :id, :full_name, :email, :phone, :role, :blocked_at ]).merge(
         blocked: item.blocked?,
         related_count: item.trainer? ? item.trainer_profile&.client_profiles&.count.to_i : item.client_profile&.routines&.count.to_i,
       )
@@ -71,7 +71,7 @@ module Admin
 
     def user_detail(item)
       user_summary(item).merge(
-        trainer: item.client? ? item.client_profile&.trainer_profile&.user&.as_json(only: [:id, :full_name, :email]) : nil,
+        trainer: item.client? ? item.client_profile&.trainer_profile&.user&.as_json(only: [ :id, :full_name, :email ]) : nil,
       )
     end
   end

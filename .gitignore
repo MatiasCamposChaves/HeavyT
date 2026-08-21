@@ -9,6 +9,7 @@
 
 # Ignore all environment files.
 /.env*
+!/.env.example
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -31,6 +32,7 @@
 /public/assets
 /public/vite
 /public/vite-dev
+/public/vite-test
 
 # Ignore local installers and binaries.
 *.exe

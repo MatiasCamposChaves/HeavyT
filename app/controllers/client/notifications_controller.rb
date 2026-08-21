@@ -9,16 +9,16 @@ module Client
       assignments = profile.routine_assignments.includes(:routine).order(assigned_at: :desc)
 
       render inertia: {
-        user: current_user.as_json(only: [:full_name, :email, :phone, :role]),
+        user: current_user.as_json(only: [ :full_name, :email, :phone, :role ]),
         notifications: assignments.map do |assignment|
           {
             id: assignment.id,
             routine_name: assignment.routine.name,
             assigned_at: assignment.assigned_at.to_date,
             expires_on: assignment.expires_on,
-            status: assignment.status,
+            status: assignment.status
           }
-        end,
+        end
       }
     end
   end

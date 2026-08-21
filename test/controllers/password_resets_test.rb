@@ -24,7 +24,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to login_path
     email = ActionMailer::Base.deliveries.last
-    assert_equal [@user.email], email.to
+    assert_equal [ @user.email ], email.to
     assert_includes email.body.encoded, "/password/reset/"
   end
 
@@ -45,8 +45,8 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     patch password_reset_path(token), params: {
       user: {
         password: "newpassword123",
-        password_confirmation: "newpassword123",
-      },
+        password_confirmation: "newpassword123"
+      }
     }
 
     assert_redirected_to login_path

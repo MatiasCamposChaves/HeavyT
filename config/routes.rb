@@ -25,50 +25,48 @@ Rails.application.routes.draw do
   namespace :client do
     get "dashboard", to: "dashboard#index"
     post "trainer-link", to: "trainer_links#create", as: :trainer_link
-    resources :routines, only: [:index, :show] do
+    resources :routines, only: [ :index, :show ] do
       resources :workout_sessions, only: :create
     end
-    resources :workout_sessions, path: "workouts", only: [:index, :show] do
+    resources :workout_sessions, path: "workouts", only: [ :index, :show ] do
       member { patch :complete }
       resources :exercise_results, only: :update
     end
     resource :progress, only: :show, controller: "progress"
     resources :notifications, only: :index
-    resource :profile, only: [:show, :update]
+    resource :profile, only: [ :show, :update ]
   end
 
   namespace :trainer do
     get "dashboard", to: "dashboard#index"
     post "invite", to: "invites#create", as: :invite
     get "exercise-bank", to: "exercise_templates#index", as: :exercise_bank
-    resources :exercise_templates, only: [:create, :update, :destroy]
+    resources :exercise_templates, only: [ :create, :update, :destroy ]
     resources :routines do
-        resources :exercises, only: [:create, :update, :destroy] do
+        resources :exercises, only: [ :create, :update, :destroy ] do
           member { patch :move }
         end
       resource :assignments, only: :create, controller: "routine_assignments"
     end
-    resources :workout_sessions, path: "workouts", only: [:index, :show, :destroy]
-    resources :progress, only: [:index, :show], controller: "progress"
+    resources :workout_sessions, path: "workouts", only: [ :index, :show, :destroy ]
+    resources :progress, only: [ :index, :show ], controller: "progress"
     resources :notifications, only: :index do
       member do
         patch :extend_assignment
         patch :archive_assignment
       end
     end
-    resource :profile, only: [:show, :update]
+    resource :profile, only: [ :show, :update ]
   end
 
   namespace :admin do
     get "dashboard", to: "dashboard#index"
-    resource :profile, only: [:show, :update]
-    resources :users, only: [:index, :show, :edit, :update] do
+    resource :profile, only: [ :show, :update ]
+    resources :users, only: [ :index, :show, :edit, :update ] do
       member do
         patch :block
         patch :unblock
       end
     end
   end
-
-  get "inertia-example", to: "inertia_example#index"
 end

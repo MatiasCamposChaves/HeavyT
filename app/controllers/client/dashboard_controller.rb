@@ -21,15 +21,15 @@ module Client
           day_name: Exercise::DAYS[today.wday],
           exercises_count: exercises.size,
           workout_id: workout&.id,
-          workout_status: workout&.status,
+          workout_status: workout&.status
         }
       end
 
       render inertia: {
-        user: current_user.as_json(only: [:full_name, :email, :phone, :role]),
-        trainer: trainer&.as_json(only: [:id, :full_name, :email, :phone]),
+        user: current_user.as_json(only: [ :full_name, :email, :phone, :role ]),
+        trainer: trainer&.as_json(only: [ :id, :full_name, :email, :phone ]),
         linked_at: profile.linked_at,
-        today_workouts: today_workouts,
+        today_workouts: today_workouts
       }
     end
   end

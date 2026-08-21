@@ -13,19 +13,19 @@ module Trainer
 
       if clients.empty?
         return redirect_to trainer_routine_path(routine),
-          inertia: { errors: { clients: ["Selecciona al menos un cliente vinculado."] } }
+          inertia: { errors: { clients: [ "Selecciona al menos un cliente vinculado." ] } }
       end
 
       unless duration_weeks.to_i.between?(1, 52)
         return redirect_to trainer_routine_path(routine),
-          inertia: { errors: { schedule: ["Selecciona una vigencia entre 1 y 52 semanas."] } }
+          inertia: { errors: { schedule: [ "Selecciona una vigencia entre 1 y 52 semanas." ] } }
       end
 
       routine.assign_to!(clients, duration_weeks: duration_weeks)
       redirect_to trainer_routine_path(routine), notice: "Rutina asignada a #{clients.size} cliente(s)."
     rescue ActiveRecord::RecordInvalid
       redirect_to trainer_routine_path(routine),
-        inertia: { errors: { clients: ["Agrega al menos un ejercicio antes de asignar la rutina."] } }
+        inertia: { errors: { clients: [ "Agrega al menos un ejercicio antes de asignar la rutina." ] } }
     end
   end
 end

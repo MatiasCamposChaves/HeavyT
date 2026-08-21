@@ -18,8 +18,9 @@ class RegistrationsController < InertiaController
   private
 
   def user_params
-    permitted = params.require(:user).permit(:full_name, :email, :phone, :password, :password_confirmation, :role)
-    permitted[:role] = "client" unless %w[client trainer].include?(permitted[:role])
+    permitted = params.require(:user).permit(:full_name, :email, :phone, :password, :password_confirmation)
+    requested_role = params.dig(:user, :role)
+    permitted[:role] = %w[client trainer].include?(requested_role) ? requested_role : "client"
     permitted
   end
 end

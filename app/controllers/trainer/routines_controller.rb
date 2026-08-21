@@ -4,13 +4,13 @@ module Trainer
   class RoutinesController < InertiaController
     before_action -> { authorize_role!(:trainer) }
     before_action :set_profile
-    before_action :set_routine, only: [:show, :edit, :update, :destroy]
+    before_action :set_routine, only: [ :show, :edit, :update, :destroy ]
 
     def index
       routines = @profile.routines.includes(:exercises, :routine_assignments).order(updated_at: :desc)
       render inertia: {
         user: user_json,
-        routines: routines.map { |routine| routine_summary(routine) },
+        routines: routines.map { |routine| routine_summary(routine) }
       }
     end
 
@@ -38,16 +38,16 @@ module Trainer
         exercise_templates: exercise_templates.as_json(
           only: [
             :id, :name, :default_sets, :default_repetitions, :default_rest_seconds,
-            :default_weight_lb, :notes,
+            :default_weight_lb, :notes
           ],
         ),
         clients: clients.map do |client|
-          client.user.as_json(only: [:id, :full_name, :email]).merge(
+          client.user.as_json(only: [ :id, :full_name, :email ]).merge(
             client_profile_id: client.id,
             assigned: assignments.key?(client.id),
             expires_on: assignments[client.id]&.expires_on,
           )
-        end,
+        end
       }
     end
 
@@ -83,20 +83,20 @@ module Trainer
     end
 
     def user_json
-      current_user.as_json(only: [:full_name, :email, :phone, :role])
+      current_user.as_json(only: [ :full_name, :email, :phone, :role ])
     end
 
     def routine_summary(routine)
-      routine.as_json(only: [:id, :name, :goal, :status, :updated_at]).merge(
+      routine.as_json(only: [ :id, :name, :goal, :status, :updated_at ]).merge(
         exercises_count: routine.exercises.size,
         assignments_count: routine.routine_assignments.size,
       )
     end
 
     def routine_detail(routine)
-      routine.as_json(only: [:id, :name, :description, :goal, :status]).merge(
+      routine.as_json(only: [ :id, :name, :description, :goal, :status ]).merge(
         exercises: routine.exercises.as_json(
-          only: [:id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week],
+          only: [ :id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week ],
         ),
       )
     end

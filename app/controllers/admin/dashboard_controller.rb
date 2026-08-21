@@ -6,11 +6,11 @@ module Admin
 
     def index
       render inertia: {
-        user: current_user.as_json(only: [:full_name, :email, :phone, :role]),
+        user: current_user.as_json(only: [ :full_name, :email, :phone, :role ]),
         stats: {
           clients: User.active.where(role: "client").count,
-          trainers: User.active.where(role: "trainer").count,
-        },
+          trainers: User.active.where(role: "trainer").count
+        }
       }
     end
   end

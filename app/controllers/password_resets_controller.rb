@@ -2,7 +2,7 @@
 
 class PasswordResetsController < InertiaController
   before_action :redirect_signed_in_user
-  before_action :set_user_from_token, only: [:edit, :update]
+  before_action :set_user_from_token, only: [ :edit, :update ]
 
   TOKEN_TTL = 30.minutes
 

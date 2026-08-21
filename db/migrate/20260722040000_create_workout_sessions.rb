@@ -10,6 +10,6 @@ class CreateWorkoutSessions < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :workout_sessions, [:routine_assignment_id, :status]
+    add_index :workout_sessions, [ :routine_assignment_id, :status ]
   end
 end

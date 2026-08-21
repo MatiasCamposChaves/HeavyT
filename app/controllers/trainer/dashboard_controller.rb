@@ -9,9 +9,9 @@ module Trainer
       invite = profile.current_invite
 
       render inertia: {
-        user: current_user.as_json(only: [:full_name, :email, :phone, :role]),
-        invite: invite&.as_json(only: [:code, :expires_at]),
-        clients: profile.clients.order(:full_name).as_json(only: [:id, :full_name, :email, :phone]),
+        user: current_user.as_json(only: [ :full_name, :email, :phone, :role ]),
+        invite: invite&.as_json(only: [ :code, :expires_at ]),
+        clients: profile.clients.order(:full_name).as_json(only: [ :id, :full_name, :email, :phone ])
       }
     end
   end

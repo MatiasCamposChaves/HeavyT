@@ -22,8 +22,8 @@ class ProfilesTest < ActionDispatch::IntegrationTest
         full_name: "Nombre Actualizado",
         phone: "+502 4444 4444",
         password: "newpassword123",
-        password_confirmation: "newpassword123",
-      },
+        password_confirmation: "newpassword123"
+      }
     }
 
     assert_redirected_to client_profile_path

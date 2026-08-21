@@ -15,7 +15,7 @@ class ExerciseTemplate < ApplicationRecord
     "Pantorrillas",
     "Cadera",
     "Piernas",
-    "Cuerpo completo",
+    "Cuerpo completo"
   ].freeze
 
   belongs_to :trainer_profile

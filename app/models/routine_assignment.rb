@@ -26,7 +26,7 @@ class RoutineAssignment < ApplicationRecord
     duration = Integer(weeks)
     raise ArgumentError unless duration.between?(1, 52)
 
-    update!(expires_on: [expires_on, Date.current].compact.max + duration.weeks, status: "active")
+    update!(expires_on: [ expires_on, Date.current ].compact.max + duration.weeks, status: "active")
   end
 
   def archive!

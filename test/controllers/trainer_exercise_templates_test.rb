@@ -18,8 +18,8 @@ class TrainerExerciseTemplatesTest < ActionDispatch::IntegrationTest
           name: "Press banca",
           muscle_group: "Pecho",
           equipment: "Barra",
-          notes: "Controlar tecnica",
-        },
+          notes: "Controlar tecnica"
+        }
       }
     end
 
@@ -30,8 +30,8 @@ class TrainerExerciseTemplatesTest < ActionDispatch::IntegrationTest
     patch trainer_exercise_template_path(template), params: {
       exercise_template: {
         equipment: "Maquina",
-        notes: "Subir peso con buena forma",
-      },
+        notes: "Subir peso con buena forma"
+      }
     }
 
     assert_redirected_to trainer_exercise_bank_path
@@ -61,7 +61,7 @@ class TrainerExerciseTemplatesTest < ActionDispatch::IntegrationTest
     sign_in(@trainer)
 
     patch trainer_exercise_template_path(template), params: {
-      exercise_template: { name: "Nombre cambiado" },
+      exercise_template: { name: "Nombre cambiado" }
     }
 
     assert_response :not_found

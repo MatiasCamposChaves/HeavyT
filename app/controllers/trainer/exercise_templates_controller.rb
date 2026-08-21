@@ -4,15 +4,15 @@ module Trainer
   class ExerciseTemplatesController < InertiaController
     before_action -> { authorize_role!(:trainer) }
     before_action :set_profile
-    before_action :set_template, only: [:update, :destroy]
+    before_action :set_template, only: [ :update, :destroy ]
 
     def index
       render inertia: {
         user: user_json,
         muscle_groups: ExerciseTemplate::MUSCLE_GROUPS,
         exercise_templates: @profile.exercise_templates.order(:name).as_json(
-          only: [:id, :name, :muscle_group, :equipment, :notes],
-        ),
+          only: [ :id, :name, :muscle_group, :equipment, :notes ],
+        )
       }
     end
 
@@ -54,7 +54,7 @@ module Trainer
     end
 
     def user_json
-      current_user.as_json(only: [:full_name, :email, :phone, :role])
+      current_user.as_json(only: [ :full_name, :email, :phone, :role ])
     end
   end
 end

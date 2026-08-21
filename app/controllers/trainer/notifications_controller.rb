@@ -4,7 +4,7 @@ module Trainer
   class NotificationsController < InertiaController
     before_action -> { authorize_role!(:trainer) }
     before_action :set_profile
-    before_action :set_assignment, only: [:extend_assignment, :archive_assignment]
+    before_action :set_assignment, only: [ :extend_assignment, :archive_assignment ]
 
     def index
       assignments = RoutineAssignment
@@ -51,12 +51,12 @@ module Trainer
         type: assignment.expired? ? "expired" : "expiring",
         routine_name: assignment.routine.name,
         client_name: assignment.client_profile.user.full_name,
-        expires_on: assignment.expires_on,
+        expires_on: assignment.expires_on
       }
     end
 
     def user_json
-      current_user.as_json(only: [:full_name, :email, :phone, :role])
+      current_user.as_json(only: [ :full_name, :email, :phone, :role ])
     end
   end
 end

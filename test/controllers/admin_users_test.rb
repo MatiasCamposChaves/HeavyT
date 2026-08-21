@@ -15,7 +15,7 @@ class AdminUsersTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     patch admin_user_path(@client), params: {
-      user: { full_name: "Cliente Actualizado", phone: "+502 4444 4444" },
+      user: { full_name: "Cliente Actualizado", phone: "+502 4444 4444" }
     }
 
     assert_redirected_to admin_user_path(@client)
@@ -40,7 +40,7 @@ class AdminUsersTest < ActionDispatch::IntegrationTest
     delete logout_path
 
     post login_path, params: {
-      session: { email: @client.email, password: "password123" },
+      session: { email: @client.email, password: "password123" }
     }
 
     assert_redirected_to login_path

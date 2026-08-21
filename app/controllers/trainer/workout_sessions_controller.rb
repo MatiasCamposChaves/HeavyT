@@ -8,12 +8,12 @@ module Trainer
     def index
       workouts = WorkoutSession.joins(routine_assignment: :routine)
         .where(routines: { trainer_profile_id: @profile.id })
-        .includes(routine_assignment: [:routine, { client_profile: :user }])
+        .includes(routine_assignment: [ :routine, { client_profile: :user } ])
         .order(started_at: :desc)
 
       render inertia: {
         user: user_json,
-        workouts: workouts.map { |workout| workout_summary(workout) },
+        workouts: workouts.map { |workout| workout_summary(workout) }
       }
     end
 
@@ -23,11 +23,11 @@ module Trainer
         user: user_json,
         workout: workout_summary(workout).merge(
           results: workout.exercise_results.sort_by { |result| result.exercise.position }.map do |result|
-            result.as_json(only: [:id, :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes]).merge(
+            result.as_json(only: [ :id, :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes ]).merge(
               exercise_name: result.exercise.name,
             )
           end,
-        ),
+        )
       }
     end
 
@@ -48,12 +48,12 @@ module Trainer
     end
 
     def user_json
-      current_user.as_json(only: [:full_name, :email, :phone, :role])
+      current_user.as_json(only: [ :full_name, :email, :phone, :role ])
     end
 
     def workout_summary(workout)
       assignment = workout.routine_assignment
-      workout.as_json(only: [:id, :status, :started_at, :completed_at]).merge(
+      workout.as_json(only: [ :id, :status, :started_at, :completed_at ]).merge(
         routine_name: assignment.routine.name,
         client_name: assignment.client_profile.user.full_name,
       )

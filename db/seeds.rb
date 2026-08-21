@@ -7,20 +7,20 @@ demo_users = [
     full_name: "Admin HeavyT",
     email: "admin@heavyt.local",
     phone: "+502 5555 0001",
-    role: "admin",
+    role: "admin"
   },
   {
     full_name: "Entrenador HeavyT",
     email: "entrenador@heavyt.local",
     phone: "+502 5555 0002",
-    role: "trainer",
+    role: "trainer"
   },
   {
     full_name: "Cliente HeavyT",
     email: "cliente@heavyt.local",
     phone: "+502 5555 0003",
-    role: "client",
-  },
+    role: "client"
+  }
 ]
 
 demo_users.each do |attrs|

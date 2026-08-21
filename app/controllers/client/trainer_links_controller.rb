@@ -23,7 +23,7 @@ module Client
     private
 
     def redirect_with_error(message)
-      redirect_to client_dashboard_path, inertia: { errors: { code: [message] } }
+      redirect_to client_dashboard_path, inertia: { errors: { code: [ message ] } }
     end
   end
 end

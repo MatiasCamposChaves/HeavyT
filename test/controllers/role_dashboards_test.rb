@@ -48,8 +48,8 @@ class RoleDashboardsTest < ActionDispatch::IntegrationTest
         email: "public-admin@example.com",
         phone: "+502 5555 0000",
         password: "password123",
-        role: "admin",
-      },
+        role: "admin"
+      }
     }
 
     assert_equal "client", User.find_by!(email: "public-admin@example.com").role
@@ -64,8 +64,8 @@ class RoleDashboardsTest < ActionDispatch::IntegrationTest
         phone: "+502 5555 0000",
         password: "corta",
         password_confirmation: "distinta",
-        role: "client",
-      },
+        role: "client"
+      }
     }
 
     assert_redirected_to register_path

@@ -5,7 +5,7 @@ module ProfileManagement
 
   def show
     render inertia: {
-      user: current_user.as_json(only: [:full_name, :email, :phone, :role]),
+      user: current_user.as_json(only: [ :full_name, :email, :phone, :role ])
     }
   end
 

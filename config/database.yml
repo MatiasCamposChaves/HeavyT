@@ -92,7 +92,7 @@ production:
     <<: *default
     database: heavy_t_production
     username: heavy_t
-    password: <%= ENV["HEAVY_T_DATABASE_PASSWORD"] %>
+    password: <%= ENV["HEAVYT_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: heavy_t_production_cache

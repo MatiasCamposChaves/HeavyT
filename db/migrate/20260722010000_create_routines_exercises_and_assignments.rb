@@ -31,9 +31,9 @@ class CreateRoutinesExercisesAndAssignments < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :routines, [:trainer_profile_id, :status]
-    add_index :exercises, [:routine_id, :position]
-    add_index :routine_assignments, [:routine_id, :client_profile_id], unique: true,
+    add_index :routines, [ :trainer_profile_id, :status ]
+    add_index :exercises, [ :routine_id, :position ]
+    add_index :routine_assignments, [ :routine_id, :client_profile_id ], unique: true,
       name: "index_assignments_on_routine_and_client"
   end
 end

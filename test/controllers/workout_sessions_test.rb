@@ -19,11 +19,11 @@ class WorkoutSessionsTest < ActionDispatch::IntegrationTest
 
     workout = @assignment.workout_sessions.last
     assert_redirected_to client_workout_session_path(workout)
-    assert_equal [@exercise.id], workout.exercise_results.pluck(:exercise_id)
+    assert_equal [ @exercise.id ], workout.exercise_results.pluck(:exercise_id)
 
     result = workout.exercise_results.first
     patch client_workout_session_exercise_result_path(workout, result), params: {
-      exercise_result: { completed_sets: 4, actual_repetitions: 8, actual_weight_lb: 185, completed: true },
+      exercise_result: { completed_sets: 4, actual_repetitions: 8, actual_weight_lb: 185, completed: true }
     }
 
     assert_redirected_to client_workout_session_path(workout)

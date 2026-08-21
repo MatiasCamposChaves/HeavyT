@@ -6,7 +6,7 @@ module Client
     before_action :set_profile
 
     def index
-      assignments = @profile.routine_assignments.active.includes(routine: [:exercises, { trainer_profile: :user }])
+      assignments = @profile.routine_assignments.active.includes(routine: [ :exercises, { trainer_profile: :user } ])
         .order(assigned_at: :desc)
       render inertia: {
         user: user_json,
@@ -14,28 +14,28 @@ module Client
           routine = assignment.routine
           next unless routine.status == "active"
 
-          routine.as_json(only: [:id, :name, :description, :goal]).merge(
+          routine.as_json(only: [ :id, :name, :description, :goal ]).merge(
             exercises_count: routine.exercises.size,
             assigned_at: assignment.assigned_at,
             expires_on: assignment.expires_on,
           )
-        end,
+        end
       }
     end
 
     def show
-      assignment = @profile.routine_assignments.active.includes(routine: [:exercises, { trainer_profile: :user }]).find_by!(routine_id: params[:id])
+      assignment = @profile.routine_assignments.active.includes(routine: [ :exercises, { trainer_profile: :user } ]).find_by!(routine_id: params[:id])
       routine = assignment.routine
       raise ActiveRecord::RecordNotFound unless routine.status == "active"
       render inertia: {
         user: user_json,
-        routine: routine.as_json(only: [:id, :name, :description, :goal]).merge(
+        routine: routine.as_json(only: [ :id, :name, :description, :goal ]).merge(
           trainer_name: routine.trainer_profile.user.full_name,
           expires_on: assignment.expires_on,
           exercises: routine.exercises.as_json(
-            only: [:id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week],
+            only: [ :id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week ],
           ),
-        ),
+        )
       }
     end
 
@@ -46,7 +46,7 @@ module Client
     end
 
     def user_json
-      current_user.as_json(only: [:full_name, :email, :phone, :role])
+      current_user.as_json(only: [ :full_name, :email, :phone, :role ])
     end
   end
 end

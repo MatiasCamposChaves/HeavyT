@@ -15,10 +15,10 @@ class ProgressReport
         completed_workouts: workouts.size,
         total_volume_lb: weighted_results.sum { |result| volume(result) }.round(1),
         max_weight_lb: weighted_results.map { |result| result.actual_weight_lb.to_f }.max.to_f,
-        last_workout_at: workouts.map(&:completed_at).compact.max,
+        last_workout_at: workouts.map(&:completed_at).compact.max
       },
       weekly_activity: weekly_activity(workouts),
-      exercise_progress: exercise_progress(weighted_results),
+      exercise_progress: exercise_progress(weighted_results)
     }
   end
 
@@ -39,7 +39,7 @@ class ProgressReport
       week = start_of_week - weeks_ago.weeks
       {
         label: week.strftime("%d/%m"),
-        value: workouts.count { |workout| workout.completed_at&.to_date&.between?(week, week + 6.days) },
+        value: workouts.count { |workout| workout.completed_at&.to_date&.between?(week, week + 6.days) }
       }
     end
   end
@@ -53,9 +53,9 @@ class ProgressReport
           {
             date: (result.workout_session.completed_at || result.created_at).to_date,
             weight_lb: result.actual_weight_lb.to_f,
-            volume_lb: volume(result).round(1),
+            volume_lb: volume(result).round(1)
           }
-        end,
+        end
       }
     end
   end

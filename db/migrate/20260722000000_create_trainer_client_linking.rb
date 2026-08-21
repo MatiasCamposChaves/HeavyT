@@ -23,6 +23,6 @@ class CreateTrainerClientLinking < ActiveRecord::Migration[8.1]
     end
 
     add_index :trainer_invites, :code, unique: true
-    add_index :trainer_invites, [:trainer_profile_id, :expires_at]
+    add_index :trainer_invites, [ :trainer_profile_id, :expires_at ]
   end
 end

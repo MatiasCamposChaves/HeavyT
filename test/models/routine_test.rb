@@ -18,7 +18,7 @@ class RoutineTest < ActiveSupport::TestCase
     routine = trainer.trainer_profile.routines.create!(name: "Pecho")
     routine.exercises.create!(name: "Press", sets: 4, repetitions: 10, position: 1)
 
-    routine.assign_to!([client.client_profile])
+    routine.assign_to!([ client.client_profile ])
 
     assert_equal "active", routine.reload.status
     assert_includes client.client_profile.routines, routine
