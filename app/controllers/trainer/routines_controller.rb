@@ -35,11 +35,9 @@ module Trainer
       render inertia: {
         user: user_json,
         routine: routine_detail(@routine),
+        muscle_groups: ExerciseTemplate::MUSCLE_GROUPS,
         exercise_templates: exercise_templates.as_json(
-          only: [
-            :id, :name, :default_sets, :default_repetitions, :default_rest_seconds,
-            :default_weight_lb, :notes
-          ],
+          only: [ :id, :name, :muscle_group, :equipment, :notes ],
         ),
         clients: clients.map do |client|
           client.user.as_json(only: [ :id, :full_name, :email ]).merge(
@@ -95,9 +93,17 @@ module Trainer
 
     def routine_detail(routine)
       routine.as_json(only: [ :id, :name, :description, :goal, :status ]).merge(
-        exercises: routine.exercises.as_json(
-          only: [ :id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week ],
-        ),
+        exercises: routine.exercises.map { |exercise| exercise_json(exercise) },
+      )
+    end
+
+    def exercise_json(exercise)
+      exercise.as_json(
+        only: [
+          :id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week,
+          :set_type, :paired_exercise_name, :drop_sets_count, :technique_notes
+        ],
+        methods: [ :set_type_name ],
       )
     end
   end

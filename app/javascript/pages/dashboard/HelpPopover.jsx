@@ -18,7 +18,17 @@ const helpByPath = [
       "Puedes actualizar tu nombre completo y teléfono.",
       "El correo identifica tu cuenta y por ahora no puede modificarse.",
       "Para cambiar la contraseña, completa ambos campos de contraseña.",
-      "Cerrar sesión se encuentra al final de esta pantalla.",
+      "El botón de cerrar sesión también está disponible en la parte superior.",
+    ],
+  },
+  {
+    match: /^\/trainer\/exercise-bank/,
+    title: "Banco de ejercicios",
+    items: [
+      "Crea cada ejercicio una sola vez para reutilizarlo al armar rutinas.",
+      "Selecciona un grupo muscular predeterminado para mantener el banco ordenado.",
+      "Equipo y notas ayudan a diferenciar ejercicios con nombres parecidos.",
+      "El inventario se organiza por grupo muscular para encontrar ejercicios más rápido.",
     ],
   },
   {
@@ -44,11 +54,14 @@ const helpByPath = [
     match: /^\/trainer\/routines\/\d+$/,
     title: "Ejercicios y asignación",
     items: [
+      "Primero selecciona el grupo muscular y luego el ejercicio guardado en el banco.",
       "Series: cantidad de bloques que debe completar el cliente.",
       "Repeticiones: movimientos que se realizan en cada serie.",
       "Descanso (seg): tiempo de recuperación entre series, expresado en segundos.",
       "Peso sugerido (lb): carga recomendada, expresada en libras.",
-      "Orden: posición del ejercicio; 1 aparece primero, 2 después, y así sucesivamente.",
+      "Tipo de serie permite indicar serie normal, biserie, superserie o drop set.",
+      "En biseries y superseries selecciona el ejercicio combinado desde el banco.",
+      "En drop set indica cuántas bajadas de peso debe registrar el cliente.",
       "Finalizar y asignar activa la rutina para los clientes seleccionados.",
     ],
   },
@@ -59,7 +72,7 @@ const helpByPath = [
       "Nueva crea una rutina desde cero.",
       "Borrador indica que aún está en preparación.",
       "Activa indica que puede ser consultada por clientes asignados.",
-      "Abre una rutina para administrar ejercicios y clientes.",
+      "Abre una rutina para agregar ejercicios, técnicas avanzadas y clientes.",
     ],
   },
   {
@@ -73,12 +86,79 @@ const helpByPath = [
     ],
   },
   {
+    match: /^\/trainer\/workouts\/\d+$/,
+    title: "Detalle de actividad",
+    items: [
+      "Aquí revisas lo que registró el cliente durante un entrenamiento.",
+      "Las biseries y superseries muestran datos del ejercicio principal y del combinado.",
+      "Los drop sets muestran cada bajada con sus repeticiones y peso.",
+      "Eliminar del historial borra esa sesión registrada.",
+    ],
+  },
+  {
+    match: /^\/trainer\/workouts/,
+    title: "Actividad de clientes",
+    items: [
+      "Consulta los entrenamientos iniciados o completados por tus clientes.",
+      "Abre una actividad para revisar series, repeticiones, pesos y notas.",
+      "Los ejercicios completados aparecen marcados con estado finalizado.",
+    ],
+  },
+  {
+    match: /^\/trainer\/progress\/\d+/,
+    title: "Progreso del cliente",
+    items: [
+      "Revisa el progreso histórico del cliente según entrenamientos completados.",
+      "El volumen total se calcula con series, repeticiones y peso registrado.",
+      "La gráfica por ejercicio ayuda a ver cambios de carga con el tiempo.",
+    ],
+  },
+  {
+    match: /^\/trainer\/progress/,
+    title: "Progreso de clientes",
+    items: [
+      "Selecciona un cliente para ver sus métricas de entrenamiento.",
+      "Los reportes usan solo entrenamientos completados.",
+      "Si un cliente aún no registra pesos, su progreso aparecerá limitado.",
+    ],
+  },
+  {
+    match: /^\/trainer\/notifications/,
+    title: "Notificaciones",
+    items: [
+      "Aquí aparecen avisos importantes relacionados con tus clientes.",
+      "Revisa nuevas asignaciones, actividad o eventos pendientes.",
+      "Las notificaciones ayudan a dar seguimiento sin revisar cada pantalla manualmente.",
+    ],
+  },
+  {
+    match: /^\/client\/workouts\/\d+$/,
+    title: "Registrar entrenamiento",
+    items: [
+      "Completa series, repeticiones y peso utilizado para cada ejercicio.",
+      "En biseries y superseries registra el ejercicio principal y el combinado.",
+      "En drop set completa cada bajada de peso que indicó tu entrenador.",
+      "Marca el ejercicio como completado para poder guardar el avance.",
+      "Cuando todos los ejercicios estén completados, finaliza el entrenamiento.",
+    ],
+  },
+  {
+    match: /^\/client\/workouts/,
+    title: "Historial",
+    items: [
+      "Aquí ves tus entrenamientos anteriores y sesiones en progreso.",
+      "Completado indica que finalizaste toda la rutina de ese día.",
+      "En progreso indica que todavía puedes seguir registrando ejercicios.",
+    ],
+  },
+  {
     match: /^\/client\/routines\/\d+$/,
     title: "Detalle de la rutina",
     items: [
       "Completa los ejercicios en el orden mostrado.",
       "Las series y repeticiones aparecen junto al nombre del ejercicio.",
       "El descanso está expresado en segundos y el peso sugerido en libras.",
+      "Las técnicas avanzadas aparecen debajo del ejercicio cuando aplican.",
       "Lee las notas de tu entrenador antes de comenzar cada ejercicio.",
     ],
   },
@@ -102,6 +182,24 @@ const helpByPath = [
     ],
   },
   {
+    match: /^\/client\/progress/,
+    title: "Mi progreso",
+    items: [
+      "Consulta tus entrenamientos completados y el volumen registrado.",
+      "El peso máximo usa los ejercicios donde registraste carga.",
+      "El progreso por ejercicio se actualiza conforme guardas entrenamientos.",
+    ],
+  },
+  {
+    match: /^\/client\/notifications/,
+    title: "Notificaciones",
+    items: [
+      "Aquí aparecen avisos de rutinas asignadas y cambios importantes.",
+      "Usa las notificaciones para entrar rápido a tus rutinas pendientes.",
+      "Si no hay avisos, no tienes acciones nuevas por revisar.",
+    ],
+  },
+  {
     match: /^\/admin\/dashboard/,
     title: "Panel administrativo",
     items: [
@@ -116,7 +214,11 @@ function currentHelp() {
   const path = window.location.pathname
   return helpByPath.find((entry) => entry.match.test(path)) || {
     title: "Ayuda de HeavyT",
-    items: ["Utiliza la navegación inferior para cambiar entre el inicio y tus rutinas."],
+    items: [
+      "Usa el menú lateral para moverte entre inicio, rutinas, progreso, notificaciones y perfil.",
+      "En pantallas pequeñas, la navegación principal aparece en la parte inferior.",
+      "El botón de cerrar sesión está disponible en la parte superior.",
+    ],
   }
 }
 

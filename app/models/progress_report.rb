@@ -35,11 +35,15 @@ class ProgressReport
 
   def weekly_activity(workouts)
     start_of_week = Time.zone.today.beginning_of_week
-    (7).downto(0).map do |weeks_ago|
-      week = start_of_week - weeks_ago.weeks
+    day_names = %w[Lunes Martes Miercoles Jueves Viernes Sabado Domingo]
+
+    (0..6).map do |day_offset|
+      day = start_of_week + day_offset.days
       {
-        label: week.strftime("%d/%m"),
-        value: workouts.count { |workout| workout.completed_at&.to_date&.between?(week, week + 6.days) }
+        label: day_names[day_offset],
+        short_label: day.strftime("%d/%m"),
+        date: day,
+        value: workouts.count { |workout| workout.completed_at&.to_date == day }
       }
     end
   end

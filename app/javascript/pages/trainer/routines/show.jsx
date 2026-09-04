@@ -4,11 +4,23 @@ import { useState } from "react"
 import DashboardShell, { card, primaryButton } from "../../dashboard/DashboardShell"
 import ExerciseForm, { dayOptions } from "./ExerciseForm"
 
-function ExerciseRow({ exercise, exercises, index, routineId }) {
+function TechniqueBadge({ exercise }) {
+  if (!exercise.set_type || exercise.set_type === "standard") return null
+
+  return <div className="mt-2 rounded-md border border-[#3b4049] bg-[#25282e] px-3 py-2 text-xs text-[#c8cbd2]">
+    <strong className="mr-2 uppercase text-[#ff6476]">{exercise.set_type_name}</strong>
+    {(exercise.set_type === "bi_set" || exercise.set_type === "super_set") && <span>con {exercise.paired_exercise_name}</span>}
+    {exercise.set_type === "drop_set" && <span>{exercise.drop_sets_count} bajada{Number(exercise.drop_sets_count) === 1 ? "" : "s"} de peso</span>}
+    {exercise.technique_notes && <p className="mb-0 mt-1">{exercise.technique_notes}</p>}
+  </div>
+}
+
+function ExerciseRow({ exercise, exerciseTemplates, exercises, index, routineId }) {
   return <div className="flex items-start gap-2 rounded-lg bg-[#171a20] p-3">
     <details className="min-w-0 flex-1">
       <summary className="cursor-pointer font-extrabold">{exercise.position}. {exercise.name} - {exercise.sets}x{exercise.repetitions}</summary>
-      <div className="mt-4"><ExerciseForm exercise={exercise} routineId={routineId} /></div>
+      <TechniqueBadge exercise={exercise} />
+      <div className="mt-4"><ExerciseForm exercise={exercise} exerciseTemplates={exerciseTemplates} routineId={routineId} /></div>
     </details>
     <div className="flex shrink-0 gap-1">
       {index > 0 ? <Link aria-label={`Mover ${exercise.name} hacia arriba`} as="button" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-white transition hover:border-[#e5253b] hover:bg-[#c91f33]" href={`/trainer/routines/${routineId}/exercises/${exercise.id}/move?direction=up`} method="patch" preserveScroll><i className="bi bi-arrow-up" /></Link> : <button aria-label="Ya es el primer ejercicio del dia" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3b4049] bg-[#25282e] text-[#60656e]" disabled type="button"><i className="bi bi-arrow-up" /></button>}
@@ -17,7 +29,7 @@ function ExerciseRow({ exercise, exercises, index, routineId }) {
   </div>
 }
 
-export default function RoutineShow({ clients, exercise_templates = [], routine, user }) {
+export default function RoutineShow({ clients, exercise_templates = [], muscle_groups = [], routine, user }) {
   const [selectedDay, setSelectedDay] = useState(1)
   const initiallySelected = clients.filter((client) => client.assigned).map((client) => String(client.client_profile_id))
   const { data, errors, post, processing, setData } = useForm({
@@ -60,7 +72,7 @@ export default function RoutineShow({ clients, exercise_templates = [], routine,
           <div className="mb-4 flex flex-wrap gap-2">
             {dayOptions.map((day) => <button className={`rounded-lg px-3 py-2 text-xs font-extrabold transition ${selectedDay === day.value ? "bg-[#e5253b] text-white" : "bg-[#171a20] text-[#c8cbd2] hover:bg-[#343840] hover:text-white"}`} key={day.value} onClick={() => setSelectedDay(day.value)} type="button">{day.label}</button>)}
           </div>
-          <ExerciseForm defaultDay={selectedDay} exerciseTemplates={exercise_templates} key={`new-${selectedDay}`} routineId={routine.id} />
+          <ExerciseForm defaultDay={selectedDay} exerciseTemplates={exercise_templates} key={`new-${selectedDay}`} muscleGroups={muscle_groups} routineId={routine.id} />
         </section>
 
         <section className={card}>
@@ -71,7 +83,7 @@ export default function RoutineShow({ clients, exercise_templates = [], routine,
               if (exercises.length === 0) return null
               return <section className="grid gap-2" key={day.value}>
                 <h3 className="m-0 border-b border-[#3b4049] pb-2 text-base font-extrabold uppercase text-[#ff6476]">{day.label}</h3>
-                {exercises.map((exercise, index) => <ExerciseRow exercise={exercise} exercises={exercises} index={index} key={exercise.id} routineId={routine.id} />)}
+                {exercises.map((exercise, index) => <ExerciseRow exercise={exercise} exerciseTemplates={exercise_templates} exercises={exercises} index={index} key={exercise.id} routineId={routine.id} />)}
               </section>
             })}
           </div>}

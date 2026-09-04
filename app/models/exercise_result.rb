@@ -7,6 +7,8 @@ class ExerciseResult < ApplicationRecord
   validates :exercise_id, uniqueness: { scope: :workout_session_id }
   validates :completed_sets, :actual_repetitions, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :actual_weight_lb, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :paired_actual_repetitions, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :paired_actual_weight_lb, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :notes, length: { maximum: 500 }
   validate :exercise_belongs_to_session_routine
 

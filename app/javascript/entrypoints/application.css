@@ -29,11 +29,15 @@ body {
   margin: 0;
 }
 
+* {
+  letter-spacing: 0;
+}
+
 button,
 input,
 select,
 textarea {
-  font-family: inherit;
+  font-family: var(--font-heading);
 }
 
 select,
@@ -61,4 +65,17 @@ h5,
 h6,
 [role="heading"] {
   font-family: var(--font-heading);
+}
+
+label,
+summary,
+strong,
+.font-bold,
+.font-extrabold,
+.font-black {
+  font-family: var(--font-heading);
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }

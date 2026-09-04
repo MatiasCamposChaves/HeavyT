@@ -3,6 +3,57 @@ import { useEffect, useState } from "react"
 
 import DashboardShell, { card } from "../../dashboard/DashboardShell"
 
+function TechniqueBadge({ result }) {
+  if (!result.exercise_set_type || result.exercise_set_type === "standard") return null
+
+  return <div className="mt-3 rounded-md border border-[#3b4049] bg-[#171a20] px-3 py-2 text-xs text-[#c8cbd2]">
+    <strong className="mr-2 uppercase text-[#ff6476]">{result.exercise_set_type_name}</strong>
+    {(result.exercise_set_type === "bi_set" || result.exercise_set_type === "super_set") && <span>con {result.paired_exercise_name}</span>}
+    {result.exercise_set_type === "drop_set" && <span>{result.drop_sets_count} bajada{Number(result.drop_sets_count) === 1 ? "" : "s"} de peso</span>}
+    {result.technique_notes && <p className="mb-0 mt-1 leading-5">{result.technique_notes}</p>}
+  </div>
+}
+
+function ResultDetails({ result }) {
+  const isPairedSet = result.exercise_set_type === "bi_set" || result.exercise_set_type === "super_set"
+  const isDropSet = result.exercise_set_type === "drop_set"
+  const dropSetResults = Array.isArray(result.drop_set_results) ? result.drop_set_results : []
+
+  return <div className="mt-3 grid gap-3">
+    <div className="rounded-lg border border-[#3b4049] bg-[#171a20]/60 p-3">
+      <h3 className="m-0 mb-2 text-sm font-extrabold uppercase text-white">{result.exercise_name}</h3>
+      <div className="grid grid-cols-3 gap-2 text-center text-xs">
+        <div><strong className="block text-lg text-white">{result.completed_sets}</strong>Series</div>
+        <div><strong className="block text-lg text-white">{result.actual_repetitions}</strong>Reps</div>
+        <div><strong className="block text-lg text-white">{result.actual_weight_lb ?? 0}</strong>lb</div>
+      </div>
+    </div>
+    {isPairedSet && (
+      <div className="rounded-lg border border-[#3b4049] bg-[#171a20]/60 p-3">
+        <h3 className="m-0 mb-2 text-sm font-extrabold uppercase text-white">{result.paired_exercise_name}</h3>
+        <div className="grid grid-cols-2 gap-2 text-center text-xs">
+          <div><strong className="block text-lg text-white">{result.paired_actual_repetitions}</strong>Reps</div>
+          <div><strong className="block text-lg text-white">{result.paired_actual_weight_lb ?? 0}</strong>lb</div>
+        </div>
+      </div>
+    )}
+    {isDropSet && dropSetResults.length > 0 && (
+      <div className="rounded-lg border border-[#3b4049] bg-[#171a20]/60 p-3">
+        <h3 className="m-0 mb-2 text-sm font-extrabold uppercase text-white">Bajadas del drop set</h3>
+        <div className="grid gap-2">
+          {dropSetResults.map((dropSet, index) => (
+            <div className="grid grid-cols-3 gap-2 rounded-md bg-[#25282e] p-2 text-center text-xs" key={index}>
+              <strong className="text-[#ff6476]">Bajada {index + 1}</strong>
+              <span><strong className="text-white">{dropSet.repetitions || 0}</strong> reps</span>
+              <span><strong className="text-white">{dropSet.weight_lb || 0}</strong> lb</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+}
+
 export default function TrainerWorkoutShow({ user, workout }) {
   const [deleteOpen, setDeleteOpen] = useState(false)
   const { delete: destroy, processing } = useForm()
@@ -30,11 +81,8 @@ export default function TrainerWorkoutShow({ user, workout }) {
     <div className="grid gap-3">
       {workout.results.map((result) => <article className={card} key={result.id}>
         <div className="flex justify-between gap-3"><strong>{result.exercise_name}</strong><i className={`bi ${result.completed ? "bi-check-circle-fill text-emerald-400" : "bi-circle text-[#aeb2ba]"}`} /></div>
-        <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
-          <div><strong className="block text-lg text-white">{result.completed_sets}</strong>Series</div>
-          <div><strong className="block text-lg text-white">{result.actual_repetitions}</strong>Reps</div>
-          <div><strong className="block text-lg text-white">{result.actual_weight_lb ?? 0}</strong>lb</div>
-        </div>
+        <TechniqueBadge result={result} />
+        <ResultDetails result={result} />
         {result.notes && <p className="mb-0 mt-3 border-t border-[#3b4049] pt-3 text-sm text-[#c8cbd2]">{result.notes}</p>}
       </article>)}
     </div>

@@ -92,6 +92,10 @@ class WorkoutSessionsTest < ActionDispatch::IntegrationTest
     assert_equal 1, report[:summary][:completed_workouts]
     assert_equal 5920.0, report[:summary][:total_volume_lb]
     assert_equal 185.0, report[:summary][:max_weight_lb]
+    assert_equal %w[Lunes Martes Miercoles Jueves Viernes Sabado Domingo], report[:weekly_activity].map { |item| item[:label] }
+    current_day = report[:weekly_activity].find { |item| item[:date] == Time.zone.today }
+    assert_equal 1, current_day[:value]
+    assert_equal Time.zone.today.strftime("%d/%m"), current_day[:short_label]
 
     sign_in(@client)
     get client_progress_path

@@ -21,7 +21,11 @@ module Client
     private
 
     def result_params
-      params.require(:exercise_result).permit(:completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes)
+      params.require(:exercise_result).permit(
+        :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes,
+        :paired_actual_repetitions, :paired_actual_weight_lb,
+        drop_set_results: [ :repetitions, :weight_lb ],
+      )
     end
   end
 end

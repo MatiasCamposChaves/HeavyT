@@ -23,8 +23,18 @@ module Trainer
         user: user_json,
         workout: workout_summary(workout).merge(
           results: workout.exercise_results.sort_by { |result| result.exercise.position }.map do |result|
-            result.as_json(only: [ :id, :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes ]).merge(
+            result.as_json(
+              only: [
+                :id, :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes,
+                :paired_actual_repetitions, :paired_actual_weight_lb, :drop_set_results
+              ],
+            ).merge(
               exercise_name: result.exercise.name,
+              exercise_set_type: result.exercise.set_type,
+              exercise_set_type_name: result.exercise.set_type_name,
+              paired_exercise_name: result.exercise.paired_exercise_name,
+              drop_sets_count: result.exercise.drop_sets_count,
+              technique_notes: result.exercise.technique_notes,
             )
           end,
         )

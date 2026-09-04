@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_17_001000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_03_001000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,8 +30,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_17_001000) do
     t.boolean "completed", default: false, null: false
     t.integer "completed_sets", default: 0, null: false
     t.datetime "created_at", null: false
+    t.jsonb "drop_set_results", default: [], null: false
     t.bigint "exercise_id", null: false
     t.text "notes"
+    t.integer "paired_actual_repetitions", default: 0, null: false
+    t.decimal "paired_actual_weight_lb", precision: 7, scale: 2
     t.datetime "updated_at", null: false
     t.bigint "workout_session_id", null: false
     t.index ["exercise_id"], name: "index_exercise_results_on_exercise_id"
@@ -54,14 +57,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_17_001000) do
   create_table "exercises", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "day_of_week", default: 1, null: false
+    t.integer "drop_sets_count"
     t.string "name", null: false
     t.text "notes"
+    t.string "paired_exercise_name"
     t.integer "position", default: 1, null: false
     t.integer "repetitions", null: false
     t.integer "rest_seconds"
     t.bigint "routine_id", null: false
+    t.string "set_type", default: "standard", null: false
     t.integer "sets", null: false
     t.decimal "suggested_weight_lb", precision: 7, scale: 2
+    t.text "technique_notes"
     t.datetime "updated_at", null: false
     t.index ["routine_id", "day_of_week", "position"], name: "index_exercises_on_routine_day_and_position"
     t.index ["routine_id", "position"], name: "index_exercises_on_routine_id_and_position"

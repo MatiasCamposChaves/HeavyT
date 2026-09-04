@@ -69,8 +69,19 @@ module Client
       workout_summary(workout).merge(
         trainer_name: workout.routine_assignment.routine.trainer_profile.user.full_name,
         results: workout.exercise_results.sort_by { |result| result.exercise.position }.map do |result|
-          result.as_json(only: [ :id, :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes ]).merge(
-            exercise: result.exercise.as_json(only: [ :id, :name, :sets, :repetitions, :suggested_weight_lb, :position ]),
+          result.as_json(
+            only: [
+              :id, :completed_sets, :actual_repetitions, :actual_weight_lb, :completed, :notes,
+              :paired_actual_repetitions, :paired_actual_weight_lb, :drop_set_results
+            ],
+          ).merge(
+            exercise: result.exercise.as_json(
+              only: [
+                :id, :name, :sets, :repetitions, :suggested_weight_lb, :position,
+                :set_type, :paired_exercise_name, :drop_sets_count, :technique_notes
+              ],
+              methods: [ :set_type_name ],
+            ),
           )
         end,
       )

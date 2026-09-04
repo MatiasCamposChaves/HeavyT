@@ -70,6 +70,29 @@ class RoutinesFlowTest < ActionDispatch::IntegrationTest
     assert_equal 135, exercise.suggested_weight_lb
   end
 
+  test "trainer adds advanced set techniques to routine exercises" do
+    routine = @trainer.trainer_profile.routines.create!(name: "Tecnicas avanzadas")
+    sign_in(@trainer)
+
+    assert_difference("Exercise.count", 1) do
+      post trainer_routine_exercises_path(routine), params: {
+        exercise: {
+          name: "Press banca",
+          sets: 4,
+          repetitions: 8,
+          set_type: "super_set",
+          paired_exercise_name: "Aperturas",
+          technique_notes: "Sin descanso entre ejercicios"
+        }
+      }
+    end
+
+    exercise = routine.exercises.last
+    assert_equal "super_set", exercise.set_type
+    assert_equal "Aperturas", exercise.paired_exercise_name
+    assert_equal "Superserie", exercise.set_type_name
+  end
+
   test "trainer reorders exercises and positions stay consecutive" do
     routine = @trainer.trainer_profile.routines.create!(name: "Ordenada")
     first = routine.exercises.create!(name: "Primero", sets: 3, repetitions: 10, position: 1)
@@ -102,7 +125,15 @@ class RoutinesFlowTest < ActionDispatch::IntegrationTest
 
   test "trainer assigns routine and client can view it" do
     routine = @trainer.trainer_profile.routines.create!(name: "Espalda")
-    routine.exercises.create!(name: "Remo", sets: 4, repetitions: 12, position: 1)
+    routine.exercises.create!(
+      name: "Remo",
+      sets: 4,
+      repetitions: 12,
+      position: 1,
+      set_type: "drop_set",
+      drop_sets_count: 2,
+      technique_notes: "Bajar peso sin descanso"
+    )
     sign_in(@trainer)
 
     post trainer_routine_assignments_path(routine), params: {
@@ -118,6 +149,67 @@ class RoutinesFlowTest < ActionDispatch::IntegrationTest
     assert_response :success
     get client_routine_path(routine)
     assert_response :success
+    exercise = inertia_props.fetch("routine").fetch("exercises").first
+    assert_equal "drop_set", exercise.fetch("set_type")
+    assert_equal "Drop set", exercise.fetch("set_type_name")
+    assert_equal 2, exercise.fetch("drop_sets_count")
+  end
+
+  test "client stores advanced workout result details" do
+    routine = @trainer.trainer_profile.routines.create!(name: "Tecnicas")
+    paired = routine.exercises.create!(
+      name: "Desplantes",
+      sets: 3,
+      repetitions: 10,
+      position: 1,
+      day_of_week: 1,
+      set_type: "bi_set",
+      paired_exercise_name: "Sentadillas"
+    )
+    drop = routine.exercises.create!(
+      name: "Press banca",
+      sets: 3,
+      repetitions: 8,
+      position: 2,
+      day_of_week: 1,
+      set_type: "drop_set",
+      drop_sets_count: 2
+    )
+    assignment = routine.routine_assignments.create!(client_profile: @client.client_profile, assigned_at: Time.current, expires_on: 2.weeks.from_now)
+    workout = assignment.workout_sessions.create!(started_at: Time.current, day_of_week: 1)
+    paired_result = workout.exercise_results.create!(exercise: paired)
+    drop_result = workout.exercise_results.create!(exercise: drop)
+    sign_in(@client)
+
+    patch client_workout_session_exercise_result_path(workout, paired_result), params: {
+      exercise_result: {
+        completed_sets: 3,
+        actual_repetitions: 10,
+        actual_weight_lb: 35,
+        paired_actual_repetitions: 12,
+        paired_actual_weight_lb: 95,
+        completed: true
+      }
+    }
+    patch client_workout_session_exercise_result_path(workout, drop_result), params: {
+      exercise_result: {
+        completed_sets: 3,
+        actual_repetitions: 8,
+        actual_weight_lb: 135,
+        drop_set_results: [
+          { repetitions: 8, weight_lb: 115 },
+          { repetitions: 8, weight_lb: 95 }
+        ],
+        completed: true
+      }
+    }
+
+    assert_equal 12, paired_result.reload.paired_actual_repetitions
+    assert_equal 95, paired_result.paired_actual_weight_lb
+    assert_equal [
+      { "repetitions" => "8", "weight_lb" => "115" },
+      { "repetitions" => "8", "weight_lb" => "95" }
+    ], drop_result.reload.drop_set_results
   end
 
   test "trainer cannot edit another trainers routine" do
@@ -139,5 +231,9 @@ class RoutinesFlowTest < ActionDispatch::IntegrationTest
 
   def sign_in(user)
     post login_path, params: { session: { email: user.email, password: "password123" } }
+  end
+
+  def inertia_props
+    JSON.parse(response.body.match(%r{<script data-page="app" type="application/json">(.*?)</script>}m)[1]).fetch("props")
   end
 end

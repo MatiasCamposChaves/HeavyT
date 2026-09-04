@@ -63,7 +63,10 @@ module Trainer
 
     def exercise_params
       params.require(:exercise)
-        .permit(:exercise_template_id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :day_of_week)
+        .permit(
+          :exercise_template_id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :day_of_week,
+          :set_type, :paired_exercise_name, :drop_sets_count, :technique_notes,
+        )
         .except(:exercise_template_id)
     end
 

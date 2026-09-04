@@ -17,7 +17,7 @@ module Client
           routine.as_json(only: [ :id, :name, :description, :goal ]).merge(
             exercises_count: routine.exercises.size,
             assigned_at: assignment.assigned_at,
-            expires_on: assignment.expires_on,
+            expires_on: assignment.expires_on
           )
         end
       }
@@ -32,9 +32,7 @@ module Client
         routine: routine.as_json(only: [ :id, :name, :description, :goal ]).merge(
           trainer_name: routine.trainer_profile.user.full_name,
           expires_on: assignment.expires_on,
-          exercises: routine.exercises.as_json(
-            only: [ :id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week ],
-          ),
+          exercises: routine.exercises.map { |exercise| exercise_json(exercise) },
         )
       }
     end
@@ -47,6 +45,16 @@ module Client
 
     def user_json
       current_user.as_json(only: [ :full_name, :email, :phone, :role ])
+    end
+
+    def exercise_json(exercise)
+      exercise.as_json(
+        only: [
+          :id, :name, :sets, :repetitions, :rest_seconds, :suggested_weight_lb, :notes, :position, :day_of_week,
+          :set_type, :paired_exercise_name, :drop_sets_count, :technique_notes
+        ],
+        methods: [ :set_type_name ],
+      )
     end
   end
 end

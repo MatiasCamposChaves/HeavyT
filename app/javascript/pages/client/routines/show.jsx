@@ -9,6 +9,17 @@ const dayOptions = [
   { value: 0, label: "Domingo" },
 ]
 
+function TechniqueBadge({ exercise }) {
+  if (!exercise.set_type || exercise.set_type === "standard") return null
+
+  return <div className="mb-3 rounded-md border border-[#3b4049] bg-[#171a20] px-3 py-2 text-xs text-[#c8cbd2]">
+    <strong className="mr-2 uppercase text-[#ff6476]">{exercise.set_type_name}</strong>
+    {(exercise.set_type === "bi_set" || exercise.set_type === "super_set") && <span>con {exercise.paired_exercise_name}</span>}
+    {exercise.set_type === "drop_set" && <span>{exercise.drop_sets_count} bajada{Number(exercise.drop_sets_count) === 1 ? "" : "s"} de peso</span>}
+    {exercise.technique_notes && <LinkifiedText className="mb-0 mt-1 leading-5 text-[#c8cbd2]" text={exercise.technique_notes} />}
+  </div>
+}
+
 export default function ClientRoutineShow({ routine, user }) {
   return <DashboardShell user={user}>
     <Head title={routine.name} />
@@ -30,6 +41,7 @@ export default function ClientRoutineShow({ routine, user }) {
               <h3 className="m-0 text-base font-extrabold">{exercise.position}. {exercise.name}</h3>
               <strong className="whitespace-nowrap text-[#e5253b]">{exercise.sets} × {exercise.repetitions}</strong>
             </div>
+            <TechniqueBadge exercise={exercise} />
             <div className="grid grid-cols-1 gap-2 text-xs text-[#c8cbd2] min-[360px]:grid-cols-2">
               <span>Descanso: {exercise.rest_seconds ?? 0} seg</span>
               {exercise.suggested_weight_lb && <span>Peso sugerido: {exercise.suggested_weight_lb} lb</span>}

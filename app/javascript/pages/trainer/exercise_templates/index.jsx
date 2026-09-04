@@ -105,6 +105,35 @@ function TemplateCard({ muscleGroups = [], template }) {
   )
 }
 
+function GroupedInventory({ exerciseTemplates = [], muscleGroups = [] }) {
+  const groupsWithExercises = muscleGroups
+    .map((group) => ({
+      name: group,
+      exercises: exerciseTemplates.filter((template) => template.muscle_group === group),
+    }))
+    .filter((group) => group.exercises.length > 0)
+
+  if (groupsWithExercises.length === 0) {
+    return <p className="m-0 rounded-lg border border-dashed border-[#3b4049] p-5 text-center text-[#c8cbd2]">Todavia no hay ejercicios en el banco.</p>
+  }
+
+  return (
+    <div className="grid gap-3">
+      {groupsWithExercises.map((group) => (
+        <details className="rounded-lg bg-[#171a20]" key={group.name}>
+          <summary className="flex cursor-pointer items-center justify-between gap-3 px-4 py-3 font-extrabold text-white">
+            <span>{group.name}</span>
+            <span className="rounded-full bg-[#e5253b]/15 px-3 py-1 text-xs text-[#ff6476]">{group.exercises.length}</span>
+          </summary>
+          <div className="grid gap-3 border-t border-[#3b4049] p-3">
+            {group.exercises.map((template) => <TemplateCard key={template.id} muscleGroups={muscleGroups} template={template} />)}
+          </div>
+        </details>
+      ))}
+    </div>
+  )
+}
+
 export default function ExerciseTemplateIndex({ exercise_templates = [], errors = {}, muscle_groups = [], user }) {
   return (
     <DashboardShell user={user}>
@@ -127,13 +156,7 @@ export default function ExerciseTemplateIndex({ exercise_templates = [], errors 
         <section className={card}>
           <h2 className="mb-1 font-extrabold uppercase">Inventario</h2>
           <p className="mb-3 mt-0 text-sm text-[#aeb2ba]">{exercise_templates.length} ejercicios guardados</p>
-          {exercise_templates.length > 0 ? (
-            <div className="grid gap-3">
-              {exercise_templates.map((template) => <TemplateCard key={template.id} muscleGroups={muscle_groups} template={template} />)}
-            </div>
-          ) : (
-            <p className="m-0 rounded-lg border border-dashed border-[#3b4049] p-5 text-center text-[#c8cbd2]">Todavia no hay ejercicios en el banco.</p>
-          )}
+          <GroupedInventory exerciseTemplates={exercise_templates} muscleGroups={muscle_groups} />
         </section>
       </div>
     </DashboardShell>
